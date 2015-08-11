@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extentions\ListViewExExtention.cs" />
+    <Compile Include="Extentions\ListViewExtention.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,12 +60,6 @@
     </Compile>
     <Compile Include="TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainForm2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm2.Designer.cs">
-      <DependentUpon>MainForm2.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -82,9 +76,6 @@
     <EmbeddedResource Include="TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm2.resx">
-      <DependentUpon>MainForm2.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -96,9 +87,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\sweet.stock.model\sweet.stock.model.csproj">
-      <Project>{D68C7041-453A-4A5A-BB58-99F816B1490E}</Project>
-      <Name>sweet.stock.model</Name>
+    <ProjectReference Include="..\sweet.stock.client\sweet.stock.client.csproj">
+      <Project>{E3605C9E-42A8-4EA3-B66B-C0B7AF2DD6AA}</Project>
+      <Name>sweet.stock.client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\sweet.stock.core\sweet.stock.core.csproj">
+      <Project>{9DC00E86-776C-4FD6-897E-D62AEEE46907}</Project>
+      <Name>sweet.stock.core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

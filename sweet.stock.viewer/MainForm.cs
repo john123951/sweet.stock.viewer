@@ -1,7 +1,7 @@
 ﻿using DevComponents.DotNetBar;
-using sweet.stock.model;
-using System.Collections.Generic;
+using sweet.stock.core.Model;
 using sweet.stock.viewer.Extentions;
+using System.Collections.Generic;
 
 namespace sweet.stock.viewer
 {
@@ -11,6 +11,8 @@ namespace sweet.stock.viewer
         {
             InitializeComponent();
             ModifyComponent();
+            InitializeEvent();
+
             InitStockData();
         }
 

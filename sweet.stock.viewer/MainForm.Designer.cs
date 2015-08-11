@@ -37,6 +37,10 @@ namespace sweet.stock.viewer
             this.dockSite4 = new DevComponents.DotNetBar.DockSite();
             this.bar1 = new DevComponents.DotNetBar.Bar();
             this.panelDockContainer1 = new DevComponents.DotNetBar.PanelDockContainer();
+            this.contextMenuBar = new DevComponents.DotNetBar.ContextMenuBar();
+            this.bi_stockList_right = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonItem3 = new DevComponents.DotNetBar.ButtonItem();
+            this.buttonItem2 = new DevComponents.DotNetBar.ButtonItem();
             this.s_opacity = new DevComponents.DotNetBar.Controls.Slider();
             this.sb_alwayTop = new DevComponents.DotNetBar.Controls.SwitchButton();
             this.dockContainerItem1 = new DevComponents.DotNetBar.DockContainerItem();
@@ -48,11 +52,13 @@ namespace sweet.stock.viewer
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.lv_stockInfo = new DevComponents.DotNetBar.Controls.ListViewEx();
+            this.buttonItem1 = new DevComponents.DotNetBar.ButtonItem();
             labelX1 = new DevComponents.DotNetBar.LabelX();
             this.dockSite4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).BeginInit();
             this.bar1.SuspendLayout();
             this.panelDockContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar)).BeginInit();
             this.SuspendLayout();
             // 
             // labelX1
@@ -97,10 +103,10 @@ namespace sweet.stock.viewer
             this.dockSite4.Controls.Add(this.bar1);
             this.dockSite4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dockSite4.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 594, 95)))}, DevComponents.DotNetBar.eOrientation.Vertical);
-            this.dockSite4.Location = new System.Drawing.Point(0, 126);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 594, 97)))}, DevComponents.DotNetBar.eOrientation.Vertical);
+            this.dockSite4.Location = new System.Drawing.Point(0, 124);
             this.dockSite4.Name = "dockSite4";
-            this.dockSite4.Size = new System.Drawing.Size(594, 98);
+            this.dockSite4.Size = new System.Drawing.Size(594, 100);
             this.dockSite4.TabIndex = 3;
             this.dockSite4.TabStop = false;
             // 
@@ -120,7 +126,7 @@ namespace sweet.stock.viewer
             this.bar1.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
             this.bar1.Location = new System.Drawing.Point(0, 3);
             this.bar1.Name = "bar1";
-            this.bar1.Size = new System.Drawing.Size(594, 95);
+            this.bar1.Size = new System.Drawing.Size(594, 97);
             this.bar1.Stretch = true;
             this.bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
             this.bar1.TabIndex = 0;
@@ -130,19 +136,56 @@ namespace sweet.stock.viewer
             // panelDockContainer1
             // 
             this.panelDockContainer1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.panelDockContainer1.Controls.Add(this.contextMenuBar);
             this.panelDockContainer1.Controls.Add(labelX1);
             this.panelDockContainer1.Controls.Add(this.s_opacity);
             this.panelDockContainer1.Controls.Add(this.sb_alwayTop);
             this.panelDockContainer1.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelDockContainer1.Location = new System.Drawing.Point(3, 23);
             this.panelDockContainer1.Name = "panelDockContainer1";
-            this.panelDockContainer1.Size = new System.Drawing.Size(588, 69);
+            this.panelDockContainer1.Size = new System.Drawing.Size(588, 71);
             this.panelDockContainer1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDockContainer1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelDockContainer1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.panelDockContainer1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelDockContainer1.Style.GradientAngle = 90;
             this.panelDockContainer1.TabIndex = 0;
+            // 
+            // contextMenuBar
+            // 
+            this.contextMenuBar.AntiAlias = true;
+            this.contextMenuBar.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.contextMenuBar.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.bi_stockList_right,
+            this.buttonItem2});
+            this.contextMenuBar.Location = new System.Drawing.Point(349, 7);
+            this.contextMenuBar.Name = "contextMenuBar";
+            this.contextMenuBar.Size = new System.Drawing.Size(124, 51);
+            this.contextMenuBar.Stretch = true;
+            this.contextMenuBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.contextMenuBar.TabIndex = 9;
+            this.contextMenuBar.TabStop = false;
+            this.contextMenuBar.Text = "contextMenuBar1";
+            // 
+            // bi_stockList_right
+            // 
+            this.bi_stockList_right.AutoExpandOnClick = true;
+            this.bi_stockList_right.Name = "bi_stockList_right";
+            this.bi_stockList_right.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.buttonItem1,
+            this.buttonItem3});
+            this.bi_stockList_right.Text = "bi_stockList_right";
+            // 
+            // buttonItem3
+            // 
+            this.buttonItem3.Name = "buttonItem3";
+            this.buttonItem3.Text = "删除(&D)";
+            // 
+            // buttonItem2
+            // 
+            this.buttonItem2.AutoExpandOnClick = true;
+            this.buttonItem2.Name = "buttonItem2";
+            this.buttonItem2.Text = "buttonItem2";
             // 
             // s_opacity
             // 
@@ -188,7 +231,7 @@ namespace sweet.stock.viewer
             this.dockSite1.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite1.Location = new System.Drawing.Point(0, 0);
             this.dockSite1.Name = "dockSite1";
-            this.dockSite1.Size = new System.Drawing.Size(0, 126);
+            this.dockSite1.Size = new System.Drawing.Size(0, 124);
             this.dockSite1.TabIndex = 0;
             this.dockSite1.TabStop = false;
             // 
@@ -199,7 +242,7 @@ namespace sweet.stock.viewer
             this.dockSite2.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite2.Location = new System.Drawing.Point(594, 0);
             this.dockSite2.Name = "dockSite2";
-            this.dockSite2.Size = new System.Drawing.Size(0, 126);
+            this.dockSite2.Size = new System.Drawing.Size(0, 124);
             this.dockSite2.TabIndex = 1;
             this.dockSite2.TabStop = false;
             // 
@@ -266,12 +309,16 @@ namespace sweet.stock.viewer
             this.lv_stockInfo.FullRowSelect = true;
             this.lv_stockInfo.GridLines = true;
             this.lv_stockInfo.Location = new System.Drawing.Point(0, 0);
-            this.lv_stockInfo.MultiSelect = false;
             this.lv_stockInfo.Name = "lv_stockInfo";
-            this.lv_stockInfo.Size = new System.Drawing.Size(594, 126);
+            this.lv_stockInfo.Size = new System.Drawing.Size(594, 124);
             this.lv_stockInfo.TabIndex = 8;
             this.lv_stockInfo.UseCompatibleStateImageBehavior = false;
             this.lv_stockInfo.View = System.Windows.Forms.View.Details;
+            // 
+            // buttonItem1
+            // 
+            this.buttonItem1.Name = "buttonItem1";
+            this.buttonItem1.Text = "新增(&I)";
             // 
             // MainForm
             // 
@@ -289,12 +336,13 @@ namespace sweet.stock.viewer
             this.Controls.Add(this.dockSite8);
             this.DoubleBuffered = true;
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Text = "股票价格一瞥";
             this.dockSite4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).EndInit();
             this.bar1.ResumeLayout(false);
             this.panelDockContainer1.ResumeLayout(false);
             this.panelDockContainer1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.contextMenuBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -313,6 +361,15 @@ namespace sweet.stock.viewer
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(SystemInformation.WorkingArea.Width - this.Width, SystemInformation.WorkingArea.Height - this.Height);
 
+            //绑定右键菜单
+            contextMenuBar.SetContextMenuEx(lv_stockInfo, bi_stockList_right);
+
+
+        }
+
+        void InitializeEvent()
+        {
+            buttonItem1.Click += (sender, e) => { };
         }
 
         private DevComponents.DotNetBar.DotNetBarManager dotNetBarManager1;
@@ -330,5 +387,10 @@ namespace sweet.stock.viewer
         private DevComponents.DotNetBar.Controls.SwitchButton sb_alwayTop;
         private DevComponents.DotNetBar.DockContainerItem dockContainerItem1;
         private DevComponents.DotNetBar.Controls.ListViewEx lv_stockInfo;
+        private DevComponents.DotNetBar.ContextMenuBar contextMenuBar;
+        private DevComponents.DotNetBar.ButtonItem bi_stockList_right;
+        private DevComponents.DotNetBar.ButtonItem buttonItem2;
+        private DevComponents.DotNetBar.ButtonItem buttonItem3;
+        private DevComponents.DotNetBar.ButtonItem buttonItem1;
     }
 }
