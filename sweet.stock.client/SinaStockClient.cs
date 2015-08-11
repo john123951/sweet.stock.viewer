@@ -47,7 +47,7 @@ namespace sweet.stock.client
                     var strItem = s.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                     if (strItem.Length == 6)
                     {
-                        result.Add(new SuggestInfo() { StockId = strItem[3], StockCode = strItem[0], StockName = strItem[4] });
+                        result.Add(new SuggestInfo() { StockId = strItem[3], StockCode = strItem[2], StockName = strItem[4] });
                     }
                 }
 

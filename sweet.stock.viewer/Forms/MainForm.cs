@@ -1,18 +1,26 @@
-﻿using DevComponents.DotNetBar;
+﻿using System.Collections.Generic;
+using DevComponents.DotNetBar;
+using sweet.stock.core.Contract;
 using sweet.stock.core.Model;
 using sweet.stock.viewer.Extentions;
-using System.Collections.Generic;
 
-namespace sweet.stock.viewer
+namespace sweet.stock.viewer.Forms
 {
     public partial class MainForm : Office2007Form
     {
+        private readonly IStockReader _stockReader;
+
         public MainForm()
         {
             InitializeComponent();
             ModifyComponent();
             InitializeEvent();
+        }
 
+        public MainForm(IStockReader stockReader)
+            : this()
+        {
+            _stockReader = stockReader;
             InitStockData();
         }
 

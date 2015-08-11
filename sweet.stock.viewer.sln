@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sweet.stock.core", "sweet.s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sweet.stock.utility", "sweet.stock.utility\sweet.stock.utility.csproj", "{32D627C8-8BA7-4A5D-B7C9-D34BE69FB94F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sweet.stock.repository", "sweet.stock.repository\sweet.stock.repository.csproj", "{00244ADE-977C-4DC9-881F-BF33F13511A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{32D627C8-8BA7-4A5D-B7C9-D34BE69FB94F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32D627C8-8BA7-4A5D-B7C9-D34BE69FB94F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32D627C8-8BA7-4A5D-B7C9-D34BE69FB94F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00244ADE-977C-4DC9-881F-BF33F13511A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00244ADE-977C-4DC9-881F-BF33F13511A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00244ADE-977C-4DC9-881F-BF33F13511A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00244ADE-977C-4DC9-881F-BF33F13511A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

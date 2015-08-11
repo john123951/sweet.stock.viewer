@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9DC00E86-776C-4FD6-897E-D62AEEE46907}</ProjectGuid>
+    <ProjectGuid>{00244ADE-977C-4DC9-881F-BF33F13511A5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>sweet.stock.core</RootNamespace>
-    <AssemblyName>sweet.stock.core</AssemblyName>
+    <RootNamespace>sweet.stock.repository</RootNamespace>
+    <AssemblyName>sweet.stock.repository</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -38,12 +38,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contract\IStockRepository.cs" />
-    <Compile Include="Contract\IStockReader.cs" />
-    <Compile Include="Entity\StockEntity.cs" />
-    <Compile Include="Model\StockInfo.cs" />
-    <Compile Include="Model\SuggestInfo.cs" />
+    <Compile Include="XmlStockRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\sweet.stock.core\sweet.stock.core.csproj">
+      <Project>{9DC00E86-776C-4FD6-897E-D62AEEE46907}</Project>
+      <Name>sweet.stock.core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\sweet.stock.utility\sweet.stock.utility.csproj">
+      <Project>{32d627c8-8ba7-4a5d-b7c9-d34be69fb94f}</Project>
+      <Name>sweet.stock.utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

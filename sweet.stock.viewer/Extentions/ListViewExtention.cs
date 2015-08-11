@@ -9,7 +9,8 @@ namespace sweet.stock.viewer.Extentions
 {
     public static class ListViewExtention
     {
-        public static void ViewList<T>(this ListView listView, IEnumerable<T> modelList)
+        public static void ViewList<T>(this ListView listView, IEnumerable<T> modelList,
+                                       Action<ListView> modifyColumns = null, Action<ListView,ListViewItem> modifyItem = null)
             where T : class
         {
             var props = typeof(T).GetProperties();
@@ -30,6 +31,7 @@ namespace sweet.stock.viewer.Extentions
                 var sizeF = graphics.MeasureString(columnName, listView.Font);
                 listView.Columns.Add(propertyInfo.Name, columnName, (int)(Math.Ceiling(sizeF.Width) + 10), HorizontalAlignment.Left, 0);
             }
+            if (modifyColumns != null) { modifyColumns(listView); }
 
             //添加行
             listView.BeginUpdate();
@@ -55,9 +57,13 @@ namespace sweet.stock.viewer.Extentions
                         item.SubItems.Add(value.ToString());
                     }
                 }
+                if (modifyItem != null) { modifyItem(listView,item); }
             }
 
-            listView.Items[listView.Items.Count - 1].EnsureVisible();//滚动到最后
+            if (listView.Items.Count > 1)
+            {
+                listView.Items[listView.Items.Count - 1].EnsureVisible();//滚动到最后
+            }
             listView.EndUpdate();
         }
     }
