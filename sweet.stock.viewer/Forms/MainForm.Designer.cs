@@ -68,6 +68,7 @@ namespace sweet.stock.viewer.Forms
             this.lv_stockInfo = new DevComponents.DotNetBar.Controls.ListViewEx();
             this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
             this.tb_stockId = new sweet.stock.viewer.UserControls.AutoCompleteTextBoxXListView();
+            this.rightContext_btnOpenSina = new DevComponents.DotNetBar.ButtonItem();
             this.dockSite4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).BeginInit();
             this.bar1.SuspendLayout();
@@ -191,7 +192,8 @@ namespace sweet.stock.viewer.Forms
             this.bi_stockList_right.Name = "bi_stockList_right";
             this.bi_stockList_right.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.rightContext_btnInsert,
-            this.rightContext_btnDelete});
+            this.rightContext_btnDelete,
+            this.rightContext_btnOpenSina});
             this.bi_stockList_right.Text = "bi_stockList_right";
             // 
             // rightContext_btnInsert
@@ -416,6 +418,11 @@ namespace sweet.stock.viewer.Forms
             this.tb_stockId.TabIndex = 0;
             this.tb_stockId.WatermarkText = "股票代码";
             // 
+            // rightContext_btnOpenSina
+            // 
+            this.rightContext_btnOpenSina.Name = "rightContext_btnOpenSina";
+            this.rightContext_btnOpenSina.Text = "打开新浪行情";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -486,5 +493,6 @@ namespace sweet.stock.viewer.Forms
         private DevComponents.DotNetBar.ButtonX btn_insertStock;
         private DevComponents.DotNetBar.StyleManager styleManager1;
         private ComboBoxEx cb_themeStyle;
+        private DevComponents.DotNetBar.ButtonItem rightContext_btnOpenSina;
     }
 }

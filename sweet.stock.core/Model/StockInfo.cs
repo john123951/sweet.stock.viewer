@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace sweet.stock.core.Model
 {
@@ -31,6 +32,6 @@ namespace sweet.stock.core.Model
         public decimal LowestPrice { get; set; }
 
         [Description("今日涨幅")]
-        public string Increase { get { return ((PresentPrice / ClosingPrice - 1) * 1).ToString("+0.00%;-0.00%;0%"); } }
+        public string Increase { get { return ((PresentPrice / Math.Max(0.01m, ClosingPrice) - 1) * 1).ToString("+0.00%;-0.00%;0%"); } }
     }
 }

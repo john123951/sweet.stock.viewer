@@ -2,9 +2,11 @@
 using sweet.stock.core.Contract;
 using sweet.stock.core.Entity;
 using sweet.stock.core.Model;
+using sweet.stock.utility.Extentions;
 using sweet.stock.viewer.Extentions;
 using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -58,6 +60,17 @@ namespace sweet.stock.viewer.Forms
                 }
                 InitStockData();
             };
+            rightContext_btnOpenSina.Click += (sender, e) =>
+            {
+                foreach (ListViewItem selectedItem in lv_stockInfo.SelectedItems)
+                {
+                    var stockInfo = selectedItem.Tag as StockInfo;
+                    if (stockInfo != null)
+                    {
+                        Process.Start(string.Format("http://finance.sina.com.cn/realstock/company/{0}/nc.shtml", stockInfo.StockId));
+                    }
+                }
+            };
 
             //智能补全
             tb_stockId.KeyUp += (sender, e) =>
@@ -101,6 +114,7 @@ namespace sweet.stock.viewer.Forms
 
         private void InitStockData()
         {
+            lv_stockInfo.Clear();
             if (lv_stockInfo.Columns.Count <= 0)
             {
                 lv_stockInfo.Columns.Add("", lv_stockInfo.Width);
@@ -111,12 +125,26 @@ namespace sweet.stock.viewer.Forms
             Task.Factory.StartNew(() =>
             {
                 var stockList = _stockService.InitAllStockInfos();
-                this.Invoke(new Action(() => { lv_stockInfo.Clear(); lv_stockInfo.ViewList(stockList); }));
 
-                _timer = new Timer();
-                _timer.Elapsed += (sender, e) => ModifyStockData();
-                _timer.Interval = 500;
-                _timer.Start();
+                this.Invoke(new Action(() => lv_stockInfo.Clear()));
+
+                if (stockList.IsNotEmpty())
+                {
+                    this.Invoke(new Action(() => lv_stockInfo.ViewList(stockList)));
+
+                    _timer = new Timer();
+                    _timer.Elapsed += (sender, e) => ModifyStockData();
+                    _timer.Interval = 500;
+                    _timer.Start();
+                }
+                else
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        lv_stockInfo.Columns.Add("", lv_stockInfo.Width);
+                        lv_stockInfo.Items.Add("请在下方“数据”中添加自选股");
+                    }));
+                }
             });
         }
 
@@ -127,11 +155,11 @@ namespace sweet.stock.viewer.Forms
             //修改显示颜色
             this.Invoke(new Action(() => lv_stockInfo.ModifyList(stockList, (model, item) =>
             {
-                if ((model.PresentPrice / model.ClosingPrice) > 1)
+                if (model.PresentPrice > model.ClosingPrice)
                 {
                     item.ModifyColor(Color.Red);
                 }
-                else if ((model.PresentPrice / model.ClosingPrice) < 1)
+                else if (model.PresentPrice < model.ClosingPrice)
                 {
                     item.ModifyColor(Color.Green);
                 }
