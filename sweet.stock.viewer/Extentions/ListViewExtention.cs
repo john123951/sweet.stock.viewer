@@ -17,7 +17,7 @@ namespace sweet.stock.viewer.Extentions
             {
                 return;
             }
-            var props = typeof(T).GetProperties();
+            var props = typeof(T).GetProperties().Where(x => x.GetCustomAttributes(typeof(DescriptionAttribute), true).Any()).ToArray();
 
             //设置
             //listView.View = View.Details;
@@ -42,9 +42,6 @@ namespace sweet.stock.viewer.Extentions
             foreach (var model in modelList)
             {
                 ListViewItem item = null;
-                //listView.Items.Add(item);
-
-                //item.ImageIndex = 1;
 
                 for (int i = 0; i < props.Length; i++)
                 {
@@ -59,6 +56,7 @@ namespace sweet.stock.viewer.Extentions
                     {
                         item.SubItems.Add(value.ToString());
                     }
+                    item.Tag = model;
                 }
             }
 
@@ -69,14 +67,14 @@ namespace sweet.stock.viewer.Extentions
             listView.EndUpdate();
         }
 
-        public static void ModifyList<T>(this ListView listView, IEnumerable<T> modelList)
+        public static void ModifyList<T>(this ListView listView, IEnumerable<T> modelList, Action<T, ListViewItem> modify = null)
             where T : class
         {
             if (listView == null || !modelList.IsNotEmpty())
             {
                 return;
             }
-            var props = typeof(T).GetProperties();
+            var props = typeof(T).GetProperties().Where(x => x.GetCustomAttributes(typeof(DescriptionAttribute), true).Any()).ToArray();
 
             listView.BeginUpdate();
 
@@ -101,10 +99,25 @@ namespace sweet.stock.viewer.Extentions
 
                         item.SubItems[i].Text = value.ToString();
                     }
+                    item.Tag = model;
                 }
+
+                if (modify != null) { modify(model, item); }
             }
 
             listView.EndUpdate();
+        }
+
+        public static void ModifyColor(this ListViewItem listViewItem, Color color)
+        {
+            if (listViewItem == null) { return; }
+
+            listViewItem.ForeColor = color;
+
+            foreach (ListViewItem.ListViewSubItem subItem in listViewItem.SubItems)
+            {
+                subItem.ForeColor = color;
+            }
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using DevComponents.DotNetBar;
 using sweet.stock.core.Contract;
+using sweet.stock.core.Model;
 using sweet.stock.viewer.Extentions;
 using System;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -47,27 +49,61 @@ namespace sweet.stock.viewer.Forms
                     control.Invoke(new Action(() => { control.DataSource = dataList; }));
                 });
             };
+
+            tb_stockId.AutoCompeleControl.Click += (sender, e) =>
+            {
+                var item = tb_stockId.AutoCompeleControl.SelectedItems[0];
+                if (item != null)
+                {
+                    var suggestInfo = item.Tag as SuggestInfo;
+                    if (suggestInfo != null)
+                    {
+                        tb_stockId.Text = suggestInfo.StockCode;
+                    }
+                }
+            };
         }
+
+        private System.Timers.Timer _timer = null;
 
         private void InitStockData()
         {
+            lv_stockInfo.Columns.Add("", lv_stockInfo.Width);
+            lv_stockInfo.Items.Add("正在加载......");
+
+            //加载数据
             Task.Factory.StartNew(() =>
             {
                 var stockList = _stockService.InitAllStockInfos();
                 this.Invoke(new Action(() => lv_stockInfo.ViewList(stockList)));
+
+                _timer = new Timer();
+                _timer.Elapsed += (sender, e) => ModifyStockData();
+                _timer.Interval = 500;
+                _timer.Start();
             });
-
-            timer.Elapsed += (sender, e) => ModifyStockData();
-            timer.Interval = 500;
-            timer.Start();
         }
-
-        private System.Timers.Timer timer = new Timer();
 
         private void ModifyStockData()
         {
             var stockList = _stockService.UpdateAllStockInfos();
-            this.Invoke(new Action(() => lv_stockInfo.ModifyList(stockList)));
+
+            //修改显示颜色
+            this.Invoke(new Action(() => lv_stockInfo.ModifyList(stockList, (model, item) =>
+            {
+                if ((model.PresentPrice / model.ClosingPrice) > 1)
+                {
+                    item.ModifyColor(Color.Red);
+                }
+                else if ((model.PresentPrice / model.ClosingPrice) < 1)
+                {
+                    item.ModifyColor(Color.Green);
+                }
+                else
+                {
+                    item.ModifyColor(Color.Black);
+                }
+            })));
         }
     }
 }

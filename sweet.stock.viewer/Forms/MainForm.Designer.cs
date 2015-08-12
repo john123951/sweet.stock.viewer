@@ -67,6 +67,7 @@ namespace sweet.stock.viewer.Forms
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.lv_stockInfo = new DevComponents.DotNetBar.Controls.ListViewEx();
+            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             labelX2 = new DevComponents.DotNetBar.LabelX();
             this.dockSite4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).BeginInit();
@@ -274,6 +275,7 @@ namespace sweet.stock.viewer.Forms
             // panelDockContainer2
             // 
             this.panelDockContainer2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.panelDockContainer2.Controls.Add(this.buttonX1);
             this.panelDockContainer2.Controls.Add(labelX2);
             this.panelDockContainer2.Controls.Add(this.tb_stockId);
             this.panelDockContainer2.DisabledBackColor = System.Drawing.Color.Empty;
@@ -400,6 +402,17 @@ namespace sweet.stock.viewer.Forms
             this.lv_stockInfo.UseCompatibleStateImageBehavior = false;
             this.lv_stockInfo.View = System.Windows.Forms.View.Details;
             // 
+            // buttonX1
+            // 
+            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX1.Location = new System.Drawing.Point(241, 9);
+            this.buttonX1.Name = "buttonX1";
+            this.buttonX1.Size = new System.Drawing.Size(75, 21);
+            this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttonX1.TabIndex = 2;
+            this.buttonX1.Text = "插入";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -469,5 +482,6 @@ namespace sweet.stock.viewer.Forms
         private DevComponents.DotNetBar.PanelDockContainer panelDockContainer2;
         private DevComponents.DotNetBar.DockContainerItem dockContainerItem2;
         private AutoCompleteTextBoxXListView tb_stockId;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
     }
 }

@@ -91,18 +91,5 @@ namespace sweet.stock.viewer.UserControls
             AutoCompeleControl.View = View.Details;
             AutoCompeleControl.FullRowSelect = true;
         }
-
-        protected override void InitControl()
-        {
-            base.InitControl();
-            AutoCompeleControl.Click += (sender, e) =>
-            {
-                var item = AutoCompeleControl.SelectedItems[0];
-                if (item != null)
-                {
-                    this.Text = item.SubItems[1].Text;
-                }
-            };
-        }
     }
 }
