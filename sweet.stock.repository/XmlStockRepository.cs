@@ -1,23 +1,36 @@
 ﻿using sweet.stock.core.Contract;
 using sweet.stock.core.Entity;
+using sweet.stock.utility.Serialization;
 using System.Collections.Generic;
+using System.IO;
 
 namespace sweet.stock.repository
 {
     public class XmlStockRepository : IStockRepository
     {
-        private List<StockEntity> _db = new List<StockEntity>()
-        {
-                new StockEntity(){ StockCode = "002017", StockName = "东信和平"},
-                new StockEntity(){ StockCode = "300021", StockName = "东信和平"},
-                new StockEntity(){ StockCode = "600839", StockName = "东信和平"},
-                new StockEntity(){ StockCode = "601933", StockName = "东信和平"},
-                new StockEntity(){ StockCode = "600343", StockName = "东信和平"},
-                new StockEntity(){ StockCode = "601989", StockName = "东信和平"},
-        };
+        private List<StockEntity> _db = new List<StockEntity>();
+
+        private const string FilePath = "db/stockEntity.db";
 
         public List<StockEntity> GetStoreEntities()
         {
+            string dirPath = Path.GetDirectoryName(FilePath);
+
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+
+            if (!File.Exists(FilePath))
+            {
+                var doc = XmlUtility.Serialize(new List<StockEntity>());
+                File.WriteAllText(FilePath, doc);
+            }
+
+            string fileDoc = File.ReadAllText(FilePath);
+
+            _db = XmlUtility.Deserialize<List<StockEntity>>(fileDoc);
+
             return _db;
         }
 
@@ -25,6 +38,8 @@ namespace sweet.stock.repository
         {
             _db = entities;
 
+            var doc = XmlUtility.Serialize(_db);
+            File.WriteAllText(FilePath, doc);
             return true;
         }
     }

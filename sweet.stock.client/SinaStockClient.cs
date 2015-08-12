@@ -13,7 +13,7 @@ namespace sweet.stock.client
     {
         public List<SuggestInfo> Suggest(string input)
         {
-            string url = @"http://suggest3.sinajs.cn/suggest/key=" + input;
+            string url = @"http://suggest3.sinajs.cn/suggest/type=11,12,13,14,15&key=" + input;
 
             string response = HttpUtil.Get(url, null, Encoding.GetEncoding("GBK"));
 
@@ -83,7 +83,7 @@ namespace sweet.stock.client
                         var model = new StockInfo
                         {
                             StockId = stockId,
-                            StockCode = stockId,
+                            StockCode = Regex.Match(stockId, @"(\d+)").Groups[1].Value,
                             StockName = strItem[0],
                             OpeningPrice = decimal.Parse(strItem[1]),
                             ClosingPrice = decimal.Parse(strItem[2]),

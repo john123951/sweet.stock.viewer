@@ -77,5 +77,20 @@ namespace sweet.stock.service
 
             return _stockRepository.SaveEntities(entites);
         }
+
+        public bool RemoveStockInfo(string stockCode)
+        {
+            var entites = _stockRepository.GetStoreEntities();
+
+            var entity = entites.FirstOrDefault(x => System.String.Compare(x.StockCode, stockCode, System.StringComparison.OrdinalIgnoreCase) == 0);
+
+            if (entity != null)
+            {
+                entites.Remove(entity);
+
+                return _stockRepository.SaveEntities(entites);
+            }
+            return false;
+        }
     }
 }

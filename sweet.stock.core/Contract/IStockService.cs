@@ -31,5 +31,12 @@ namespace sweet.stock.core.Contract
         /// <param name="entity"></param>
         /// <returns></returns>
         bool InsertStockInfo(StockEntity entity);
+
+        /// <summary>
+        /// 移除一个股票
+        /// </summary>
+        /// <param name="stockCode"></param>
+        /// <returns></returns>
+        bool RemoveStockInfo(string stockCode);
     }
 }

@@ -1,4 +1,6 @@
-﻿using DevComponents.DotNetBar.Controls;
+﻿using System;
+using System.Threading.Tasks;
+using DevComponents.DotNetBar.Controls;
 using sweet.stock.core.Model;
 using sweet.stock.utility.Extentions;
 using sweet.stock.viewer.Extentions;
@@ -37,6 +39,8 @@ namespace sweet.stock.viewer.UserControls
         protected void ShowList()
         {
             var form = this.FindForm();
+            if (form == null) { return; }
+
             var screenPoint = this.Parent.PointToScreen(this.Location);
             var point = form.PointToClient(screenPoint);
 
@@ -62,7 +66,11 @@ namespace sweet.stock.viewer.UserControls
             var form = this.FindForm();
             if (!this.Focused && !AutoCompeleControl.Focused && form != null)
             {
-                form.Controls.Remove(AutoCompeleControl);
+                Task.Factory.StartNew(() =>
+                {
+                    form.Invoke(new Action(() => form.Controls.Remove(AutoCompeleControl)));
+                });
+                
             }
         }
     }

@@ -42,22 +42,21 @@ namespace sweet.stock.viewer.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevComponents.DotNetBar.LabelX labelX2;
             this.dotNetBarManager1 = new DevComponents.DotNetBar.DotNetBarManager(this.components);
             this.dockSite4 = new DevComponents.DotNetBar.DockSite();
             this.bar1 = new DevComponents.DotNetBar.Bar();
             this.panelDockContainer1 = new DevComponents.DotNetBar.PanelDockContainer();
+            this.cb_themeStyle = new DevComponents.DotNetBar.Controls.ComboBoxEx();
             this.contextMenuBar = new DevComponents.DotNetBar.ContextMenuBar();
             this.bi_stockList_right = new DevComponents.DotNetBar.ButtonItem();
             this.rightContext_btnInsert = new DevComponents.DotNetBar.ButtonItem();
             this.rightContext_btnDelete = new DevComponents.DotNetBar.ButtonItem();
-            this.buttonItem2 = new DevComponents.DotNetBar.ButtonItem();
             this.s_opacity = new DevComponents.DotNetBar.Controls.Slider();
             this.sb_alwayTop = new DevComponents.DotNetBar.Controls.SwitchButton();
             this.dockContainerItem1 = new DevComponents.DotNetBar.DockContainerItem();
             this.bar2 = new DevComponents.DotNetBar.Bar();
             this.panelDockContainer2 = new DevComponents.DotNetBar.PanelDockContainer();
-            this.tb_stockId = new sweet.stock.viewer.UserControls.AutoCompleteTextBoxXListView();
+            this.btn_insertStock = new DevComponents.DotNetBar.ButtonX();
             this.dockContainerItem2 = new DevComponents.DotNetBar.DockContainerItem();
             this.dockSite1 = new DevComponents.DotNetBar.DockSite();
             this.dockSite2 = new DevComponents.DotNetBar.DockSite();
@@ -67,8 +66,8 @@ namespace sweet.stock.viewer.Forms
             this.dockSite7 = new DevComponents.DotNetBar.DockSite();
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.lv_stockInfo = new DevComponents.DotNetBar.Controls.ListViewEx();
-            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
-            labelX2 = new DevComponents.DotNetBar.LabelX();
+            this.styleManager1 = new DevComponents.DotNetBar.StyleManager(this.components);
+            this.tb_stockId = new sweet.stock.viewer.UserControls.AutoCompleteTextBoxXListView();
             this.dockSite4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).BeginInit();
             this.bar1.SuspendLayout();
@@ -78,19 +77,6 @@ namespace sweet.stock.viewer.Forms
             this.bar2.SuspendLayout();
             this.panelDockContainer2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // labelX2
-            // 
-            labelX2.AutoSize = true;
-            // 
-            // 
-            // 
-            labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            labelX2.Location = new System.Drawing.Point(9, 10);
-            labelX2.Name = "labelX2";
-            labelX2.Size = new System.Drawing.Size(68, 18);
-            labelX2.TabIndex = 1;
-            labelX2.Text = "股票代码：";
             // 
             // dotNetBarManager1
             // 
@@ -108,7 +94,7 @@ namespace sweet.stock.viewer.Forms
             this.dotNetBarManager1.LeftDockSite = this.dockSite1;
             this.dotNetBarManager1.ParentForm = this;
             this.dotNetBarManager1.RightDockSite = this.dockSite2;
-            this.dotNetBarManager1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.dotNetBarManager1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.dotNetBarManager1.ToolbarBottomDockSite = this.dockSite8;
             this.dotNetBarManager1.ToolbarLeftDockSite = this.dockSite5;
             this.dotNetBarManager1.ToolbarRightDockSite = this.dockSite6;
@@ -122,11 +108,11 @@ namespace sweet.stock.viewer.Forms
             this.dockSite4.Controls.Add(this.bar2);
             this.dockSite4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dockSite4.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 594, 92))),
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 594, 140)))}, DevComponents.DotNetBar.eOrientation.Vertical);
-            this.dockSite4.Location = new System.Drawing.Point(0, 48);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar1, 594, 59))),
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 594, 60)))}, DevComponents.DotNetBar.eOrientation.Vertical);
+            this.dockSite4.Location = new System.Drawing.Point(0, 45);
             this.dockSite4.Name = "dockSite4";
-            this.dockSite4.Size = new System.Drawing.Size(594, 238);
+            this.dockSite4.Size = new System.Drawing.Size(594, 125);
             this.dockSite4.TabIndex = 3;
             this.dockSite4.TabStop = false;
             // 
@@ -146,42 +132,55 @@ namespace sweet.stock.viewer.Forms
             this.bar1.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
             this.bar1.Location = new System.Drawing.Point(0, 3);
             this.bar1.Name = "bar1";
-            this.bar1.Size = new System.Drawing.Size(594, 92);
+            this.bar1.Size = new System.Drawing.Size(594, 59);
             this.bar1.Stretch = true;
-            this.bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.bar1.TabIndex = 0;
             this.bar1.TabStop = false;
             this.bar1.Text = "外观";
             // 
             // panelDockContainer1
             // 
-            this.panelDockContainer1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.panelDockContainer1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelDockContainer1.Controls.Add(this.cb_themeStyle);
             this.panelDockContainer1.Controls.Add(this.contextMenuBar);
             this.panelDockContainer1.Controls.Add(this.s_opacity);
             this.panelDockContainer1.Controls.Add(this.sb_alwayTop);
             this.panelDockContainer1.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelDockContainer1.Location = new System.Drawing.Point(3, 23);
             this.panelDockContainer1.Name = "panelDockContainer1";
-            this.panelDockContainer1.Size = new System.Drawing.Size(588, 66);
+            this.panelDockContainer1.Size = new System.Drawing.Size(588, 33);
             this.panelDockContainer1.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.panelDockContainer1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
-            this.panelDockContainer1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelDockContainer1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelDockContainer1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelDockContainer1.Style.GradientAngle = 90;
             this.panelDockContainer1.TabIndex = 0;
+            // 
+            // cb_themeStyle
+            // 
+            this.cb_themeStyle.DisplayMember = "Text";
+            this.cb_themeStyle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cb_themeStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_themeStyle.FormattingEnabled = true;
+            this.cb_themeStyle.ItemHeight = 15;
+            this.cb_themeStyle.Location = new System.Drawing.Point(80, 7);
+            this.cb_themeStyle.Name = "cb_themeStyle";
+            this.cb_themeStyle.Size = new System.Drawing.Size(133, 21);
+            this.cb_themeStyle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.cb_themeStyle.TabIndex = 10;
+            this.cb_themeStyle.WatermarkText = "界面风格";
             // 
             // contextMenuBar
             // 
             this.contextMenuBar.AntiAlias = true;
             this.contextMenuBar.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.contextMenuBar.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
-            this.bi_stockList_right,
-            this.buttonItem2});
-            this.contextMenuBar.Location = new System.Drawing.Point(349, 7);
+            this.bi_stockList_right});
+            this.contextMenuBar.Location = new System.Drawing.Point(461, 6);
             this.contextMenuBar.Name = "contextMenuBar";
-            this.contextMenuBar.Size = new System.Drawing.Size(124, 51);
+            this.contextMenuBar.Size = new System.Drawing.Size(124, 27);
             this.contextMenuBar.Stretch = true;
-            this.contextMenuBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.contextMenuBar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.contextMenuBar.TabIndex = 9;
             this.contextMenuBar.TabStop = false;
             this.contextMenuBar.Text = "contextMenuBar1";
@@ -205,23 +204,18 @@ namespace sweet.stock.viewer.Forms
             this.rightContext_btnDelete.Name = "rightContext_btnDelete";
             this.rightContext_btnDelete.Text = "删除(&D)";
             // 
-            // buttonItem2
-            // 
-            this.buttonItem2.AutoExpandOnClick = true;
-            this.buttonItem2.Name = "buttonItem2";
-            this.buttonItem2.Text = "buttonItem2";
-            // 
             // s_opacity
             // 
             // 
             // 
             // 
             this.s_opacity.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.s_opacity.Location = new System.Drawing.Point(9, 35);
+            this.s_opacity.Location = new System.Drawing.Point(219, 7);
             this.s_opacity.Minimum = 20;
             this.s_opacity.Name = "s_opacity";
-            this.s_opacity.Size = new System.Drawing.Size(150, 23);
+            this.s_opacity.Size = new System.Drawing.Size(150, 21);
             this.s_opacity.Step = 5;
+            this.s_opacity.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.s_opacity.TabIndex = 1;
             this.s_opacity.TabStop = false;
             this.s_opacity.Text = "透明：";
@@ -233,10 +227,10 @@ namespace sweet.stock.viewer.Forms
             // 
             // 
             this.sb_alwayTop.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.sb_alwayTop.Location = new System.Drawing.Point(9, 6);
+            this.sb_alwayTop.Location = new System.Drawing.Point(8, 7);
             this.sb_alwayTop.Name = "sb_alwayTop";
             this.sb_alwayTop.OnText = "Top";
-            this.sb_alwayTop.Size = new System.Drawing.Size(66, 22);
+            this.sb_alwayTop.Size = new System.Drawing.Size(66, 21);
             this.sb_alwayTop.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.sb_alwayTop.TabIndex = 0;
             this.sb_alwayTop.TabStop = false;
@@ -263,47 +257,40 @@ namespace sweet.stock.viewer.Forms
             this.bar2.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.dockContainerItem2});
             this.bar2.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
-            this.bar2.Location = new System.Drawing.Point(0, 98);
+            this.bar2.Location = new System.Drawing.Point(0, 65);
             this.bar2.Name = "bar2";
-            this.bar2.Size = new System.Drawing.Size(594, 140);
+            this.bar2.Size = new System.Drawing.Size(594, 60);
             this.bar2.Stretch = true;
-            this.bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
+            this.bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.bar2.TabIndex = 1;
             this.bar2.TabStop = false;
             this.bar2.Text = "数据";
             // 
             // panelDockContainer2
             // 
-            this.panelDockContainer2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
-            this.panelDockContainer2.Controls.Add(this.buttonX1);
-            this.panelDockContainer2.Controls.Add(labelX2);
+            this.panelDockContainer2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.panelDockContainer2.Controls.Add(this.btn_insertStock);
             this.panelDockContainer2.Controls.Add(this.tb_stockId);
             this.panelDockContainer2.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelDockContainer2.Location = new System.Drawing.Point(3, 23);
             this.panelDockContainer2.Name = "panelDockContainer2";
-            this.panelDockContainer2.Size = new System.Drawing.Size(588, 114);
+            this.panelDockContainer2.Size = new System.Drawing.Size(588, 34);
             this.panelDockContainer2.Style.Alignment = System.Drawing.StringAlignment.Center;
-            this.panelDockContainer2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
-            this.panelDockContainer2.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
+            this.panelDockContainer2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelDockContainer2.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelDockContainer2.Style.GradientAngle = 90;
             this.panelDockContainer2.TabIndex = 0;
             // 
-            // tb_stockId
+            // btn_insertStock
             // 
-            this.tb_stockId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.tb_stockId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            // 
-            // 
-            // 
-            this.tb_stockId.Border.Class = "TextBoxBorder";
-            this.tb_stockId.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.tb_stockId.DataSource = null;
-            this.tb_stockId.Location = new System.Drawing.Point(81, 9);
-            this.tb_stockId.Name = "tb_stockId";
-            this.tb_stockId.PreventEnterBeep = true;
-            this.tb_stockId.Size = new System.Drawing.Size(154, 21);
-            this.tb_stockId.TabIndex = 0;
+            this.btn_insertStock.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btn_insertStock.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btn_insertStock.Location = new System.Drawing.Point(169, 10);
+            this.btn_insertStock.Name = "btn_insertStock";
+            this.btn_insertStock.Size = new System.Drawing.Size(75, 21);
+            this.btn_insertStock.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btn_insertStock.TabIndex = 2;
+            this.btn_insertStock.Text = "插入";
             // 
             // dockContainerItem2
             // 
@@ -318,7 +305,7 @@ namespace sweet.stock.viewer.Forms
             this.dockSite1.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite1.Location = new System.Drawing.Point(0, 0);
             this.dockSite1.Name = "dockSite1";
-            this.dockSite1.Size = new System.Drawing.Size(0, 48);
+            this.dockSite1.Size = new System.Drawing.Size(0, 45);
             this.dockSite1.TabIndex = 0;
             this.dockSite1.TabStop = false;
             // 
@@ -329,7 +316,7 @@ namespace sweet.stock.viewer.Forms
             this.dockSite2.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
             this.dockSite2.Location = new System.Drawing.Point(594, 0);
             this.dockSite2.Name = "dockSite2";
-            this.dockSite2.Size = new System.Drawing.Size(0, 48);
+            this.dockSite2.Size = new System.Drawing.Size(0, 45);
             this.dockSite2.TabIndex = 1;
             this.dockSite2.TabStop = false;
             // 
@@ -337,7 +324,7 @@ namespace sweet.stock.viewer.Forms
             // 
             this.dockSite8.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite8.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dockSite8.Location = new System.Drawing.Point(0, 286);
+            this.dockSite8.Location = new System.Drawing.Point(0, 170);
             this.dockSite8.Name = "dockSite8";
             this.dockSite8.Size = new System.Drawing.Size(594, 0);
             this.dockSite8.TabIndex = 7;
@@ -349,7 +336,7 @@ namespace sweet.stock.viewer.Forms
             this.dockSite5.Dock = System.Windows.Forms.DockStyle.Left;
             this.dockSite5.Location = new System.Drawing.Point(0, 0);
             this.dockSite5.Name = "dockSite5";
-            this.dockSite5.Size = new System.Drawing.Size(0, 286);
+            this.dockSite5.Size = new System.Drawing.Size(0, 170);
             this.dockSite5.TabIndex = 4;
             this.dockSite5.TabStop = false;
             // 
@@ -359,7 +346,7 @@ namespace sweet.stock.viewer.Forms
             this.dockSite6.Dock = System.Windows.Forms.DockStyle.Right;
             this.dockSite6.Location = new System.Drawing.Point(594, 0);
             this.dockSite6.Name = "dockSite6";
-            this.dockSite6.Size = new System.Drawing.Size(0, 286);
+            this.dockSite6.Size = new System.Drawing.Size(0, 170);
             this.dockSite6.TabIndex = 5;
             this.dockSite6.TabStop = false;
             // 
@@ -386,6 +373,7 @@ namespace sweet.stock.viewer.Forms
             // 
             // lv_stockInfo
             // 
+            this.lv_stockInfo.BackColor = System.Drawing.Color.White;
             // 
             // 
             // 
@@ -393,31 +381,46 @@ namespace sweet.stock.viewer.Forms
             this.lv_stockInfo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lv_stockInfo.DisabledBackColor = System.Drawing.Color.Empty;
             this.lv_stockInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lv_stockInfo.ForeColor = System.Drawing.Color.Black;
             this.lv_stockInfo.FullRowSelect = true;
             this.lv_stockInfo.GridLines = true;
             this.lv_stockInfo.Location = new System.Drawing.Point(0, 0);
             this.lv_stockInfo.Name = "lv_stockInfo";
-            this.lv_stockInfo.Size = new System.Drawing.Size(594, 48);
+            this.lv_stockInfo.Size = new System.Drawing.Size(594, 45);
             this.lv_stockInfo.TabIndex = 8;
             this.lv_stockInfo.UseCompatibleStateImageBehavior = false;
             this.lv_stockInfo.View = System.Windows.Forms.View.Details;
             // 
-            // buttonX1
+            // styleManager1
             // 
-            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX1.Location = new System.Drawing.Point(241, 9);
-            this.buttonX1.Name = "buttonX1";
-            this.buttonX1.Size = new System.Drawing.Size(75, 21);
-            this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.buttonX1.TabIndex = 2;
-            this.buttonX1.Text = "插入";
+            this.styleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.VisualStudio2012Light;
+            this.styleManager1.MetroColorParameters = new DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(87)))), ((int)(((byte)(154))))));
+            // 
+            // tb_stockId
+            // 
+            this.tb_stockId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.tb_stockId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.tb_stockId.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.tb_stockId.Border.Class = "TextBoxBorder";
+            this.tb_stockId.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.tb_stockId.DataSource = null;
+            this.tb_stockId.DisabledBackColor = System.Drawing.Color.White;
+            this.tb_stockId.ForeColor = System.Drawing.Color.Black;
+            this.tb_stockId.Location = new System.Drawing.Point(9, 10);
+            this.tb_stockId.Name = "tb_stockId";
+            this.tb_stockId.PreventEnterBeep = true;
+            this.tb_stockId.Size = new System.Drawing.Size(154, 21);
+            this.tb_stockId.TabIndex = 0;
+            this.tb_stockId.WatermarkText = "股票代码";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(594, 286);
+            this.ClientSize = new System.Drawing.Size(594, 170);
             this.Controls.Add(this.lv_stockInfo);
             this.Controls.Add(this.dockSite2);
             this.Controls.Add(this.dockSite1);
@@ -438,7 +441,6 @@ namespace sweet.stock.viewer.Forms
             ((System.ComponentModel.ISupportInitialize)(this.bar2)).EndInit();
             this.bar2.ResumeLayout(false);
             this.panelDockContainer2.ResumeLayout(false);
-            this.panelDockContainer2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -475,13 +477,14 @@ namespace sweet.stock.viewer.Forms
         private DevComponents.DotNetBar.Controls.ListViewEx lv_stockInfo;
         private DevComponents.DotNetBar.ContextMenuBar contextMenuBar;
         private DevComponents.DotNetBar.ButtonItem bi_stockList_right;
-        private DevComponents.DotNetBar.ButtonItem buttonItem2;
         private DevComponents.DotNetBar.ButtonItem rightContext_btnDelete;
         private DevComponents.DotNetBar.ButtonItem rightContext_btnInsert;
         private DevComponents.DotNetBar.Bar bar2;
         private DevComponents.DotNetBar.PanelDockContainer panelDockContainer2;
         private DevComponents.DotNetBar.DockContainerItem dockContainerItem2;
         private AutoCompleteTextBoxXListView tb_stockId;
-        private DevComponents.DotNetBar.ButtonX buttonX1;
+        private DevComponents.DotNetBar.ButtonX btn_insertStock;
+        private DevComponents.DotNetBar.StyleManager styleManager1;
+        private ComboBoxEx cb_themeStyle;
     }
 }

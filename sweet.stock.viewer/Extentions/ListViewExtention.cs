@@ -60,10 +60,10 @@ namespace sweet.stock.viewer.Extentions
                 }
             }
 
-            if (listView.Items.Count > 1)
-            {
-                listView.Items[listView.Items.Count - 1].EnsureVisible();//滚动到最后
-            }
+            //if (listView.Items.Count > 1)
+            //{
+            //    listView.Items[listView.Items.Count - 1].EnsureVisible();//滚动到最后
+            //}
             listView.EndUpdate();
         }
 
@@ -92,15 +92,26 @@ namespace sweet.stock.viewer.Extentions
                         var key = value.ToString();
 
                         item = listView.Items.Find(key, false).FirstOrDefault();
+
+                        if (item == null)
+                        {
+                            item = listView.Items.Add(value.ToString(), value.ToString(), 1);
+                        }
                     }
                     else
                     {
                         if (item == null) { break; }
-
-                        item.SubItems[i].Text = value.ToString();
+                        if (item.SubItems.Count <= i + 1)
+                        {
+                            item.SubItems.Add(value.ToString());
+                        }
+                        else
+                        {
+                            item.SubItems[i].Text = value.ToString();
+                        }
                     }
-                    item.Tag = model;
                 }
+                item.Tag = model;
 
                 if (modify != null) { modify(model, item); }
             }
