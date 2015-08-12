@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace sweet.stock.core
+﻿namespace sweet.stock.core.Contract
 {
 	public interface ISettingRepository
 	{

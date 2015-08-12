@@ -41,6 +41,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Threading, Version=1.0.2856.102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -60,12 +64,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TestForm.Designer.cs">
-      <DependentUpon>TestForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\AutoCompleteTextBoxX.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -81,9 +79,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="TestForm.resx">
-      <DependentUpon>TestForm.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -107,6 +102,10 @@
     <ProjectReference Include="..\sweet.stock.repository\sweet.stock.repository.csproj">
       <Project>{00244ade-977c-4dc9-881f-bf33f13511a5}</Project>
       <Name>sweet.stock.repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\sweet.stock.service\sweet.stock.service.csproj">
+      <Project>{6CB24FC9-F0A3-4E9E-B73A-EB42FF65E445}</Project>
+      <Name>sweet.stock.service</Name>
     </ProjectReference>
     <ProjectReference Include="..\sweet.stock.utility\sweet.stock.utility.csproj">
       <Project>{32d627c8-8ba7-4a5d-b7c9-d34be69fb94f}</Project>

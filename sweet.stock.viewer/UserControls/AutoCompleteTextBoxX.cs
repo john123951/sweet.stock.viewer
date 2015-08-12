@@ -1,5 +1,6 @@
 ﻿using DevComponents.DotNetBar.Controls;
 using sweet.stock.core.Model;
+using sweet.stock.utility.Extentions;
 using sweet.stock.viewer.Extentions;
 using System.Collections.Generic;
 using System.Drawing;
@@ -39,7 +40,7 @@ namespace sweet.stock.viewer.UserControls
             var screenPoint = this.Parent.PointToScreen(this.Location);
             var point = form.PointToClient(screenPoint);
 
-            form.Controls.Add(AutoCompeleControl);
+            if (!form.Controls.Contains(AutoCompeleControl)) { form.Controls.Add(AutoCompeleControl); }
 
             //计算是否大于屏幕高度
             var high = screenPoint.Y + this.Size.Height + AutoCompeleControl.Height;
@@ -58,16 +59,31 @@ namespace sweet.stock.viewer.UserControls
 
         protected void CloseList()
         {
-            if (!this.Focused && !AutoCompeleControl.Focused)
+            var form = this.FindForm();
+            if (!this.Focused && !AutoCompeleControl.Focused && form != null)
             {
-                this.FindForm().Controls.Remove(AutoCompeleControl);
+                form.Controls.Remove(AutoCompeleControl);
             }
         }
     }
 
     public class AutoCompleteTextBoxXListView : AutoCompleteTextBoxX<ListViewEx>
     {
-        public ICollection<SuggestInfo> DataSource { get; set; }
+        private ICollection<SuggestInfo> _dataSource;
+
+        public ICollection<SuggestInfo> DataSource
+        {
+            get { return _dataSource; }
+            set
+            {
+                var listViewEx = AutoCompeleControl as ListView;
+                if (listViewEx != null && value.IsNotEmpty())
+                {
+                    listViewEx.ViewList(value); ShowList();
+                }
+                _dataSource = value;
+            }
+        }
 
         public AutoCompleteTextBoxXListView()
             : base()
@@ -79,32 +95,14 @@ namespace sweet.stock.viewer.UserControls
         protected override void InitControl()
         {
             base.InitControl();
-            AutoCompeleControl.DoubleClick += (sender, e) =>
+            AutoCompeleControl.Click += (sender, e) =>
             {
-                this.Text = AutoCompeleControl.SelectedItems[0].SubItems[1].Text;
-            };
-        }
-
-        protected override void OnKeyUp(KeyEventArgs e)
-        {
-            base.OnKeyUp(e);
-            if (DataSource != null)
-            {
-                var listViewEx = AutoCompeleControl as ListView;
-
-                if (listViewEx != null)
+                var item = AutoCompeleControl.SelectedItems[0];
+                if (item != null)
                 {
-                    //listViewEx.ViewList(DataSource, view => view.Columns.Add("操作"), (view, item) =>
-                    //{
-                    //    Button btn = new Button();
-                    //    btn.Text = "...";
-                    //    view.Controls.Add(btn);
-                    //    //btn.Location = item.SubItems[2].Bounds.Height;
-                    //    btn.Size = new Size(item.SubItems[2].Bounds.Width, item.SubItems[2].Bounds.Height);
-                    //});
+                    this.Text = item.SubItems[1].Text;
                 }
-                ShowList();
-            }
+            };
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-using sweet.stock.client;
+﻿using sweet.stock.client;
+using sweet.stock.repository;
+using sweet.stock.service;
 using sweet.stock.viewer.Forms;
+using System;
+using System.Windows.Forms;
 
 namespace sweet.stock.viewer
 {
@@ -21,7 +23,7 @@ namespace sweet.stock.viewer
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(new SinaStockClient()));
+            Application.Run(new MainForm(new StockService(new SinaStockClient(), new XmlStockRepository(), new XmlSettingRepository())));
         }
     }
 }

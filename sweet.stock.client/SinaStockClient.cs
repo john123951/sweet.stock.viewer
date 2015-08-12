@@ -62,34 +62,39 @@ namespace sweet.stock.client
             var result = new List<StockInfo>();
             using (var reader = new StringReader(input))
             {
-                var line = reader.ReadLine();
-                string stockId = string.Empty;
-
-                var matchStockId = Regex.Match(line, @"hq_str_(\w+)");
-                if (matchStockId.Success)
+                while (true)
                 {
-                    stockId = matchStockId.Groups[1].Value;
-                }
+                    var line = reader.ReadLine();
+                    string stockId = string.Empty;
 
-                var matchStockContent = Regex.Match(line, "\"(.+)\";");
-                if (matchStockContent.Success)
-                {
-                    var strItem = matchStockContent.Value.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                    if (string.IsNullOrEmpty(line)) { break; }
 
-                    var model = new StockInfo
+                    var matchStockId = Regex.Match(line, @"hq_str_(\w+)");
+                    if (matchStockId.Success)
                     {
-                        StockId = stockId,
-                        StockName = strItem[0],
-                        OpeningPrice = decimal.Parse(strItem[1]),
-                        ClosingPrice = decimal.Parse(strItem[2]),
-                        PresentPrice = decimal.Parse(strItem[3]),
-                        HighestPrice = decimal.Parse(strItem[4]),
-                        LowestPrice = decimal.Parse(strItem[5])
-                    };
+                        stockId = matchStockId.Groups[1].Value;
+                    }
 
-                    result.Add(model);
+                    var matchStockContent = Regex.Match(line, "\"(.+)\";");
+                    if (matchStockContent.Success)
+                    {
+                        var strItem = matchStockContent.Groups[1].Value.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+                        var model = new StockInfo
+                        {
+                            StockId = stockId,
+                            StockCode = stockId,
+                            StockName = strItem[0],
+                            OpeningPrice = decimal.Parse(strItem[1]),
+                            ClosingPrice = decimal.Parse(strItem[2]),
+                            PresentPrice = decimal.Parse(strItem[3]),
+                            HighestPrice = decimal.Parse(strItem[4]),
+                            LowestPrice = decimal.Parse(strItem[5])
+                        };
+
+                        result.Add(model);
+                    }
                 }
-
             }
 
             return result;

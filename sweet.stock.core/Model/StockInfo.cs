@@ -29,5 +29,8 @@ namespace sweet.stock.core.Model
 
         [Description("今日最低价")]
         public decimal LowestPrice { get; set; }
+
+        [Description("今日涨幅")]
+        public string Increase { get { return ((PresentPrice / ClosingPrice - 1) * 1).ToString("+0.00%;-0.00%;0%"); } }
     }
 }
