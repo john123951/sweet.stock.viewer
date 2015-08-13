@@ -89,7 +89,9 @@ namespace sweet.stock.client
                             ClosingPrice = decimal.Parse(strItem[2]),
                             PresentPrice = decimal.Parse(strItem[3]),
                             HighestPrice = decimal.Parse(strItem[4]),
-                            LowestPrice = decimal.Parse(strItem[5])
+                            LowestPrice = decimal.Parse(strItem[5]),
+                            TradingQuantity = double.Parse(strItem[8]),
+                            TradingAmount = decimal.Parse(strItem[9]),
                         };
 
                         result.Add(model);

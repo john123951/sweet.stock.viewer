@@ -15,15 +15,11 @@ namespace sweet.stock.viewer
         [STAThread]
         private static void Main()
         {
-            //var client = new SinaStockClient();
-
-            //var result = client.Suggest("sz002017");
-
-            //var stockInfo = client.MarketPrice(new []{"111","sz002017"});
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
             Application.Run(new MainForm(new StockService(new SinaStockClient(), new XmlStockRepository(), new XmlSettingRepository())));
+            //Application.Run(new TestForm());
         }
     }
 }

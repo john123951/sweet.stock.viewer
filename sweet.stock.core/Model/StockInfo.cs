@@ -31,6 +31,22 @@ namespace sweet.stock.core.Model
         [Description("今日最低价")]
         public decimal LowestPrice { get; set; }
 
+        public double TradingQuantity { get; set; }
+
+        [Description("成交量(万手)")]
+        public string TradingQuantityShow
+        {
+            get { return (TradingQuantity / 100 / 10000).ToString("F2"); }
+        }
+
+        public decimal TradingAmount { get; set; }
+
+        [Description("成交额(万元)")]
+        public string TradingAmountShow
+        {
+            get { return (TradingAmount / 10000).ToString("F2"); }
+        }
+
         [Description("今日涨幅")]
         public string Increase { get { return ((PresentPrice / Math.Max(0.01m, ClosingPrice) - 1) * 1).ToString("+0.00%;-0.00%;0%"); } }
     }

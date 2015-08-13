@@ -6,15 +6,17 @@ using sweet.stock.utility.Extentions;
 using sweet.stock.viewer.Extentions;
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Timer = System.Timers.Timer;
 
 namespace sweet.stock.viewer.Forms
 {
-    public partial class MainForm : Office2007Form
+    public partial class MainForm : OfficeForm
     {
         private readonly IStockService _stockService;
 
@@ -98,6 +100,17 @@ namespace sweet.stock.viewer.Forms
                     }
                 }
             };
+            //绑定显示列
+            var props = typeof(StockInfo).GetProperties()
+                                         .Select(x => x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute)
+                                         .Where(x => x != null)
+                                         .Distinct()
+                                         .ToList();
+
+            foreach (var propertyInfo in props)
+            {
+                lb_property.Items.Add(propertyInfo.Description);
+            }
 
             //插入新股票
             Action<object, EventArgs> a = (sender, e) =>
