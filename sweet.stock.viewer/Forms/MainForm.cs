@@ -1,12 +1,15 @@
-﻿using DevComponents.DotNetBar;
+﻿using System.Threading;
+using DevComponents.DotNetBar;
+using sweet.stock.core.Attribute;
 using sweet.stock.core.Contract;
 using sweet.stock.core.Entity;
 using sweet.stock.core.Model;
 using sweet.stock.utility.Extentions;
 using sweet.stock.viewer.Extentions;
+using sweet.stock.viewer.UserControls;
 using System;
 using System.Collections;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -34,6 +37,8 @@ namespace sweet.stock.viewer.Forms
 
             InitStockData();
         }
+
+        private List<ShowDescriptionAttribute> _attributes = new List<ShowDescriptionAttribute>();
 
         private void InitializeEvent()
         {
@@ -100,17 +105,37 @@ namespace sweet.stock.viewer.Forms
                     }
                 }
             };
-            //绑定显示列
-            var props = typeof(StockInfo).GetProperties()
-                                         .Select(x => x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() as DescriptionAttribute)
-                                         .Where(x => x != null)
-                                         .Distinct()
-                                         .ToList();
 
-            foreach (var propertyInfo in props)
+            //绑定显示列
+            var attributes = typeof(StockInfo).GetProperties()
+                                              .Select(x => x.GetCustomAttributes(typeof(ShowDescriptionAttribute), false)
+                                                            .FirstOrDefault() as ShowDescriptionAttribute)
+                                              .Where(x => x != null)
+                                              .Distinct()
+                                              .ToList();
+
+            this._attributes = attributes;
+
+            foreach (var showDescriptionAttribute in attributes)
             {
-                lb_property.Items.Add(propertyInfo.Description);
+                var item = new ListBoxCheckBoxItem();
+                item.Text = showDescriptionAttribute.Description;
+                //var binding = new Binding("CheckState", showDescriptionAttribute, "IsShow");
+                //binding.FormattingEnabled = true;
+                //item.DataBindings.Add(binding);
+                //item.CheckState =
+                lb_property.Items.Add(item);
             }
+
+            //Task.Factory.StartNew(() =>
+            //{
+            //    Thread.Sleep(1000 * 1);
+            //    //this._attributes.ForEach(x => x.IsShow = true);
+            //    lb_property.Invoke(new Action(() =>
+            //    {
+            //        ((ListBoxCheckBoxItem) lb_property.Items.ElementAt(1)).Checked = false;
+            //    }));
+            //});
 
             //插入新股票
             Action<object, EventArgs> a = (sender, e) =>

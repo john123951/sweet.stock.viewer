@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attribute\ShowDescriptionAttribute.cs" />
     <Compile Include="Contract\IStockRepository.cs" />
     <Compile Include="Contract\IStockReader.cs" />
     <Compile Include="Contract\IStockService.cs" />

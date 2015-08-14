@@ -1,15 +1,30 @@
-﻿using sweet.stock.utility.Extentions;
+﻿using sweet.stock.core.Attribute;
+using sweet.stock.utility.Extentions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace sweet.stock.viewer.Extentions
 {
     public static class ListViewExtention
     {
+        private static PropertyInfo[] GetProperties(Type type)
+        {
+            var props = type.GetProperties()
+                            .Where(x => x.GetCustomAttributes(typeof(ShowDescriptionAttribute), true).Any(attr =>
+                            {
+                                var showAttribute = attr as ShowDescriptionAttribute;
+                                return showAttribute != null && showAttribute.IsShow;
+                            }))
+                            .ToArray();
+
+            return props;
+        }
+
         public static void ViewList<T>(this ListView listView, IEnumerable<T> modelList)
             where T : class
         {
@@ -17,7 +32,7 @@ namespace sweet.stock.viewer.Extentions
             {
                 return;
             }
-            var props = typeof(T).GetProperties().Where(x => x.GetCustomAttributes(typeof(DescriptionAttribute), true).Any()).ToArray();
+            var props = GetProperties(typeof(T));
 
             //设置
             //listView.View = View.Details;
@@ -74,7 +89,7 @@ namespace sweet.stock.viewer.Extentions
             {
                 return;
             }
-            var props = typeof(T).GetProperties().Where(x => x.GetCustomAttributes(typeof(DescriptionAttribute), true).Any()).ToArray();
+            var props = GetProperties(typeof(T));
 
             listView.BeginUpdate();
 
