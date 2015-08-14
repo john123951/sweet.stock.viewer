@@ -1,5 +1,7 @@
 ﻿using sweet.stock.core.Attribute;
+using sweet.stock.core.Model;
 using sweet.stock.utility.Extentions;
+using sweet.stock.viewer.Configs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,15 +16,32 @@ namespace sweet.stock.viewer.Extentions
     {
         private static PropertyInfo[] GetProperties(Type type)
         {
-            var props = type.GetProperties()
-                            .Where(x => x.GetCustomAttributes(typeof(ShowDescriptionAttribute), true).Any(attr =>
-                            {
-                                var showAttribute = attr as ShowDescriptionAttribute;
-                                return showAttribute != null && showAttribute.IsShow;
-                            }))
-                            .ToArray();
+            if (type == typeof(StockInfo))
+            {
+                var settings = DataConfig.GetInstance().ShowHeaderSetting;
 
-            return props;
+                var props = type.GetProperties()
+                                .Where(x => x.GetCustomAttributes(typeof(ShowDescriptionAttribute), true).Any(attr =>
+                                {
+                                    var showAttribute = attr as ShowDescriptionAttribute;
+                                    return showAttribute != null && settings.Single(setting => setting.Description == showAttribute.Description).IsShow;
+                                }))
+                                .ToArray();
+
+                return props;
+            }
+            else
+            {
+                var props = type.GetProperties()
+                                .Where(x => x.GetCustomAttributes(typeof(ShowDescriptionAttribute), true).Any(attr =>
+                                {
+                                    var showAttribute = attr as ShowDescriptionAttribute;
+                                    return showAttribute != null && showAttribute.IsShow;
+                                }))
+                                .ToArray();
+
+                return props;
+            }
         }
 
         public static void ViewList<T>(this ListView listView, IEnumerable<T> modelList)

@@ -1,18 +1,15 @@
-﻿using System.Threading;
-using DevComponents.DotNetBar;
+﻿using DevComponents.DotNetBar;
 using sweet.stock.core.Attribute;
 using sweet.stock.core.Contract;
 using sweet.stock.core.Entity;
 using sweet.stock.core.Model;
 using sweet.stock.utility.Extentions;
+using sweet.stock.viewer.Configs;
 using sweet.stock.viewer.Extentions;
-using sweet.stock.viewer.UserControls;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Timer = System.Timers.Timer;
@@ -37,8 +34,6 @@ namespace sweet.stock.viewer.Forms
 
             InitStockData();
         }
-
-        private List<ShowDescriptionAttribute> _attributes = new List<ShowDescriptionAttribute>();
 
         private void InitializeEvent()
         {
@@ -107,35 +102,24 @@ namespace sweet.stock.viewer.Forms
             };
 
             //绑定显示列
-            var attributes = typeof(StockInfo).GetProperties()
-                                              .Select(x => x.GetCustomAttributes(typeof(ShowDescriptionAttribute), false)
-                                                            .FirstOrDefault() as ShowDescriptionAttribute)
-                                              .Where(x => x != null)
-                                              .Distinct()
-                                              .ToList();
+            var attributes = DataConfig.GetInstance().ShowHeaderSetting;
 
-            this._attributes = attributes;
+            lb_property.DataSource = attributes;
+            lb_property.DisplayMember = "Description";
+            lb_property.CheckStateMember = "IsShow";
+            lb_property.ValueMember = "IsShow";
+            lb_property.SelectedIndexChanged += (sender, e) =>
+                {
+                    if (lb_property.SelectedIndex > 0)
+                        lb_property.SetItemCheckState(lb_property.SelectedIndex, CheckState.Checked);
+                };
+            lb_property.ItemCheck += (sender, e) =>
+                {
+                    var attr = ((ShowDescriptionAttribute)((ItemBindingData)e.Item.Tag).DataItem);
 
-            foreach (var showDescriptionAttribute in attributes)
-            {
-                var item = new ListBoxCheckBoxItem();
-                item.Text = showDescriptionAttribute.Description;
-                //var binding = new Binding("CheckState", showDescriptionAttribute, "IsShow");
-                //binding.FormattingEnabled = true;
-                //item.DataBindings.Add(binding);
-                //item.CheckState =
-                lb_property.Items.Add(item);
-            }
-
-            //Task.Factory.StartNew(() =>
-            //{
-            //    Thread.Sleep(1000 * 1);
-            //    //this._attributes.ForEach(x => x.IsShow = true);
-            //    lb_property.Invoke(new Action(() =>
-            //    {
-            //        ((ListBoxCheckBoxItem) lb_property.Items.ElementAt(1)).Checked = false;
-            //    }));
-            //});
+                    attr.IsShow = e.Item.CheckState == CheckState.Checked;
+                    InitStockData();
+                };
 
             //插入新股票
             Action<object, EventArgs> a = (sender, e) =>
@@ -157,6 +141,12 @@ namespace sweet.stock.viewer.Forms
             {
                 lv_stockInfo.Columns.Add("", lv_stockInfo.Width);
                 lv_stockInfo.Items.Add("正在加载......");
+            }
+            if (_timer != null)
+            {
+                _timer.Stop();
+                _timer.Dispose();
+                _timer = null;
             }
 
             //加载数据

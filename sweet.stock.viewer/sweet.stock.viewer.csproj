@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configs\DataConfig.cs" />
     <Compile Include="Extentions\ControlExtention.cs" />
     <Compile Include="Extentions\ListViewExtention.cs" />
     <Compile Include="Forms\MainForm.cs">

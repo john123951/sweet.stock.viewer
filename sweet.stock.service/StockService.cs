@@ -73,6 +73,11 @@ namespace sweet.stock.service
 
             var entites = _stockRepository.GetStoreEntities();
 
+            if (entites.Exists(x => System.String.Compare(x.StockCode.Trim(), entity.StockCode.Trim(), System.StringComparison.OrdinalIgnoreCase) == 0))
+            {
+                return false;
+            }
+
             entites.Add(entity);
 
             return _stockRepository.SaveEntities(entites);

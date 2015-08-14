@@ -35,13 +35,13 @@ namespace sweet.stock.core.Model
         [ShowDescription("股票名字", IsShow = true)]
         public string StockName { get; set; }
 
-        [ShowDescription("今日开盘价")]
+        [ShowDescription("今日开盘价", IsShow = true)]
         public decimal OpeningPrice { get; set; }
 
-        [ShowDescription("昨日收盘价")]
+        [ShowDescription("昨日收盘价", IsShow = true)]
         public decimal ClosingPrice { get; set; }
 
-        [ShowDescription("当前价格")]
+        [ShowDescription("当前价格", IsShow = true)]
         public decimal PresentPrice { get; set; }
 
         [ShowDescription("今日最高价")]
