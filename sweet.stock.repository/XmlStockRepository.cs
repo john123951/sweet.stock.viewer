@@ -16,10 +16,7 @@ namespace sweet.stock.repository
         {
             string dirPath = Path.GetDirectoryName(FilePath);
 
-            if (!Directory.Exists(dirPath))
-            {
-                Directory.CreateDirectory(dirPath);
-            }
+            if (!string.IsNullOrEmpty(dirPath) && !Directory.Exists(dirPath)) { Directory.CreateDirectory(dirPath); }
 
             if (!File.Exists(FilePath))
             {

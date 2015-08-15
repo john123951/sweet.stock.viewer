@@ -1,12 +1,10 @@
-﻿using sweet.stock.core.Attribute;
-using sweet.stock.core.Model;
-using sweet.stock.utility.Extentions;
-using sweet.stock.viewer.Configs;
+﻿using sweet.stock.utility.Extentions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -14,44 +12,26 @@ namespace sweet.stock.viewer.Extentions
 {
     public static class ListViewExtention
     {
-        private static PropertyInfo[] GetProperties(Type type)
+        private static PropertyInfo[] GetProperties(Type type, ICollection<string> propertyNames = null)
         {
-            if (type == typeof(StockInfo))
+            var props = type.GetProperties().AsQueryable();
+
+            if (propertyNames.IsNotEmpty())
             {
-                var settings = DataConfig.GetInstance().ShowHeaderSetting;
-
-                var props = type.GetProperties()
-                                .Where(x => x.GetCustomAttributes(typeof(ShowDescriptionAttribute), true).Any(attr =>
-                                {
-                                    var showAttribute = attr as ShowDescriptionAttribute;
-                                    return showAttribute != null && settings.Single(setting => setting.Description == showAttribute.Description).IsShow;
-                                }))
-                                .ToArray();
-
-                return props;
+                props = props.Where(x => propertyNames.Any(name => System.String.Compare(name, x.Name, System.StringComparison.OrdinalIgnoreCase) == 0));
             }
-            else
-            {
-                var props = type.GetProperties()
-                                .Where(x => x.GetCustomAttributes(typeof(ShowDescriptionAttribute), true).Any(attr =>
-                                {
-                                    var showAttribute = attr as ShowDescriptionAttribute;
-                                    return showAttribute != null && showAttribute.IsShow;
-                                }))
-                                .ToArray();
 
-                return props;
-            }
+            return props.ToArray();
         }
 
-        public static void ViewList<T>(this ListView listView, IEnumerable<T> modelList)
+        public static void ViewList<T>(this ListView listView, IEnumerable<T> modelList, ICollection<string> propertyNames = null)
             where T : class
         {
             if (listView == null || !modelList.IsNotEmpty())
             {
                 return;
             }
-            var props = GetProperties(typeof(T));
+            var props = GetProperties(typeof(T), propertyNames);
 
             //设置
             //listView.View = View.Details;
@@ -101,14 +81,14 @@ namespace sweet.stock.viewer.Extentions
             listView.EndUpdate();
         }
 
-        public static void ModifyList<T>(this ListView listView, IEnumerable<T> modelList, Action<T, ListViewItem> modify = null)
+        public static void ModifyList<T>(this ListView listView, IEnumerable<T> modelList, ICollection<string> propertyNames = null, Action<T, ListViewItem> modify = null)
             where T : class
         {
             if (listView == null || !modelList.IsNotEmpty())
             {
                 return;
             }
-            var props = GetProperties(typeof(T));
+            var props = GetProperties(typeof(T), propertyNames);
 
             listView.BeginUpdate();
 

@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows.Forms;
 using DevComponents.DotNetBar.Controls;
 using EmitMapper;
+using sweet.stock.core.Entity;
 using sweet.stock.core.Model;
 using sweet.stock.viewer.UserControls;
 
@@ -146,7 +147,6 @@ namespace sweet.stock.viewer.Forms
             this.lb_property.BackgroundStyle.Class = "ListBoxAdv";
             this.lb_property.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lb_property.CheckBoxesVisible = true;
-            this.lb_property.CheckStateMember = null;
             this.lb_property.ContainerControlProcessDialogKey = true;
             this.lb_property.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lb_property.DragDropSupport = true;
@@ -485,6 +485,7 @@ namespace sweet.stock.viewer.Forms
             this.DoubleBuffered = true;
             this.Name = "MainForm";
             this.Text = "股票价格一瞥";
+            this.TopMost = true;
             collapsibleSplitContainer1.Panel1.ResumeLayout(false);
             collapsibleSplitContainer1.Panel2.ResumeLayout(false);
             collapsibleSplitContainer1.ResumeLayout(false);
@@ -502,13 +503,31 @@ namespace sweet.stock.viewer.Forms
 
         #endregion
 
-        void ModifyComponent()
+        private void ModifyComponent()
         {
+            //读取配置
+            this.Height = _configInfo.WindowHeight;
+            this.Width = _configInfo.WindowWidth;
+            this.TopMost = _configInfo.WindowTop;
+            sb_alwayTop.Value = _configInfo.WindowTop;
+
             //最在最前
-            this.DataBindings.Add("TopMost", sb_alwayTop, "Value");
+            sb_alwayTop.ValueChanged += (sender, e) => { this.TopMost = sb_alwayTop.Value; _configInfo.WindowTop = sb_alwayTop.Value; };
 
             //透明度
             s_opacity.ValueChanging += (sender, e) => this.Opacity = e.NewValue * 1.0 / 100;
+            s_opacity.DataBindings.Add("Value", _configInfo, "WindowOpacity");
+
+            //窗口大小
+            this.DataBindings.Add("Height", _configInfo, "WindowHeight");
+            this.DataBindings.Add("Width", _configInfo, "WindowWidth");
+            this.SizeChanged += (sender, e) =>
+            {
+                var form = (Form)sender;
+
+                _configInfo.WindowHeight = form.Height;
+                _configInfo.WindowWidth = form.Width;
+            };
 
             //调整窗口位置
             this.StartPosition = FormStartPosition.Manual;

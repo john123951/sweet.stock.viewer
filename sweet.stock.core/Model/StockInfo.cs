@@ -1,4 +1,4 @@
-﻿using sweet.stock.core.Attribute;
+﻿using sweet.stock.core.Attributes;
 using System;
 
 namespace sweet.stock.core.Model
@@ -52,7 +52,7 @@ namespace sweet.stock.core.Model
 
         public double TradingQuantity { get; set; }
 
-        [ShowDescription("成交量(万手)")]
+        [ShowDescription("成交量(万手)", IsShow = true)]
         public string TradingQuantityShow
         {
             get { return (TradingQuantity / 100 / 10000).ToString("F2"); }
@@ -60,7 +60,7 @@ namespace sweet.stock.core.Model
 
         public decimal TradingAmount { get; set; }
 
-        [ShowDescription("成交额(万元)")]
+        [ShowDescription("成交额(万元)", IsShow = true)]
         public string TradingAmountShow
         {
             get { return (TradingAmount / 10000).ToString("F2"); }

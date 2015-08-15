@@ -38,5 +38,18 @@ namespace sweet.stock.core.Contract
         /// <param name="stockCode"></param>
         /// <returns></returns>
         bool RemoveStockInfo(string stockCode);
+
+        /// <summary>
+        /// 获取配置信息
+        /// </summary>
+        /// <returns></returns>
+        ConfigInfo GetConfigEntity();
+
+        /// <summary>
+        /// 保存配置
+        /// </summary>
+        /// <param name="configInfo"></param>
+        /// <returns></returns>
+        bool SaveConfigEntity(ConfigInfo configInfo);
     }
 }

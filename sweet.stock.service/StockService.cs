@@ -1,4 +1,5 @@
-﻿using sweet.stock.core.Contract;
+﻿using sweet.stock.core.Attributes;
+using sweet.stock.core.Contract;
 using sweet.stock.core.Entity;
 using sweet.stock.core.Model;
 using sweet.stock.utility.Extentions;
@@ -96,6 +97,50 @@ namespace sweet.stock.service
                 return _stockRepository.SaveEntities(entites);
             }
             return false;
+        }
+
+        public ConfigInfo GetConfigEntity()
+        {
+            var configInfo = _settingRepository.GetConfigEntity();
+
+            if (configInfo == null)
+            {
+                configInfo = new ConfigInfo()
+               {
+                   ShowHeaderSetting = typeof(StockInfo).GetProperties()
+                                                             .Select(propertyInfo =>
+                                                             {
+                                                                 var showDescriptionAttribute = propertyInfo.GetCustomAttributes(typeof(ShowDescriptionAttribute), false).FirstOrDefault() as ShowDescriptionAttribute;
+                                                                 if (showDescriptionAttribute != null)
+                                                                 {
+                                                                     return new ShowDescriptionEntity
+                                                                     {
+                                                                         IsShow = showDescriptionAttribute.IsShow,
+                                                                         Description = showDescriptionAttribute.Description,
+                                                                         PropertyName = propertyInfo.Name
+                                                                     };
+                                                                 }
+                                                                 return null;
+                                                             })
+                                                             .Where(x => x != null)
+                                                             .ToList(),
+
+                   WindowWidth = 605,
+                   WindowHeight = 190,
+                   WindowOpacity = 100,
+               };
+
+                _settingRepository.SaveConfigEntity(configInfo);
+            }
+
+            return configInfo;
+        }
+
+        public bool SaveConfigEntity(ConfigInfo configInfo)
+        {
+            if (configInfo == null) { return false; }
+
+            return _settingRepository.SaveConfigEntity(configInfo);
         }
     }
 }

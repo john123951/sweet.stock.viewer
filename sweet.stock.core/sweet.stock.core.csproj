@@ -38,11 +38,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute\ShowDescriptionAttribute.cs" />
+    <Compile Include="Attributes\ShowDescriptionAttribute.cs" />
     <Compile Include="Contract\IStockRepository.cs" />
     <Compile Include="Contract\IStockReader.cs" />
     <Compile Include="Contract\IStockService.cs" />
+    <Compile Include="Entity\ShowDescriptionEntity.cs" />
     <Compile Include="Entity\StockEntity.cs" />
+    <Compile Include="Model\ConfigInfo.cs" />
     <Compile Include="Model\StockInfo.cs" />
     <Compile Include="Model\SuggestInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

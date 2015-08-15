@@ -1,15 +1,14 @@
 ﻿using DevComponents.DotNetBar;
-using sweet.stock.core.Attribute;
 using sweet.stock.core.Contract;
 using sweet.stock.core.Entity;
 using sweet.stock.core.Model;
 using sweet.stock.utility.Extentions;
-using sweet.stock.viewer.Configs;
 using sweet.stock.viewer.Extentions;
 using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Timer = System.Timers.Timer;
@@ -19,19 +18,21 @@ namespace sweet.stock.viewer.Forms
     public partial class MainForm : OfficeForm
     {
         private readonly IStockService _stockService;
+        private readonly ConfigInfo _configInfo;
 
         public MainForm()
         {
             InitializeComponent();
-            ModifyComponent();
-            InitializeEvent();
         }
 
         public MainForm(IStockService stockService)
             : this()
         {
             _stockService = stockService;
+            _configInfo = _stockService.GetConfigEntity();
 
+            ModifyComponent();
+            InitializeEvent();
             InitStockData();
         }
 
@@ -102,7 +103,7 @@ namespace sweet.stock.viewer.Forms
             };
 
             //绑定显示列
-            var attributes = DataConfig.GetInstance().ShowHeaderSetting;
+            var attributes = _configInfo.ShowHeaderSetting;
 
             lb_property.DataSource = attributes;
             lb_property.DisplayMember = "Description";
@@ -115,7 +116,7 @@ namespace sweet.stock.viewer.Forms
                 };
             lb_property.ItemCheck += (sender, e) =>
                 {
-                    var attr = ((ShowDescriptionAttribute)((ItemBindingData)e.Item.Tag).DataItem);
+                    var attr = ((ShowDescriptionEntity)((ItemBindingData)e.Item.Tag).DataItem);
 
                     attr.IsShow = e.Item.CheckState == CheckState.Checked;
                     InitStockData();
@@ -130,6 +131,9 @@ namespace sweet.stock.viewer.Forms
 
             btn_insertStock.Click += new EventHandler(a);
             tb_stockId.AutoCompeleControl.DoubleClick += new EventHandler(a);
+
+            //退出时保存设置
+            this.Closed += (sender, e) => _stockService.SaveConfigEntity(_configInfo);
         }
 
         private Timer _timer = null;
@@ -158,7 +162,12 @@ namespace sweet.stock.viewer.Forms
 
                 if (stockList.IsNotEmpty())
                 {
-                    this.Invoke(new Action(() => lv_stockInfo.ViewList(stockList)));
+                    var propNames = _configInfo.ShowHeaderSetting
+                                               .Where(x => x.IsShow)
+                                               .Select(x => x.PropertyName)
+                                               .ToList();
+
+                    this.Invoke(new Action(() => lv_stockInfo.ViewList(stockList, propNames)));
 
                     _timer = new Timer();
                     _timer.Elapsed += (sender, e) => ModifyStockData();
@@ -180,22 +189,28 @@ namespace sweet.stock.viewer.Forms
         {
             var stockList = _stockService.UpdateAllStockInfos();
 
+            var propNames = _configInfo.ShowHeaderSetting
+                                       .Where(x => x.IsShow)
+                                       .Select(x => x.PropertyName)
+                                       .ToList();
+
             //修改显示颜色
-            this.Invoke(new Action(() => lv_stockInfo.ModifyList(stockList, (model, item) =>
-            {
-                if (model.PresentPrice > model.ClosingPrice)
+            this.Invoke(new Action(() => lv_stockInfo.ModifyList(stockList, propNames,
+                (model, item) =>
                 {
-                    item.ModifyColor(Color.Red);
-                }
-                else if (model.PresentPrice < model.ClosingPrice)
-                {
-                    item.ModifyColor(Color.Green);
-                }
-                else
-                {
-                    item.ModifyColor(Color.Black);
-                }
-            })));
+                    if (model.PresentPrice > model.ClosingPrice)
+                    {
+                        item.ModifyColor(Color.Red);
+                    }
+                    else if (model.PresentPrice < model.ClosingPrice)
+                    {
+                        item.ModifyColor(Color.Green);
+                    }
+                    else
+                    {
+                        item.ModifyColor(Color.Black);
+                    }
+                })));
         }
     }
 }

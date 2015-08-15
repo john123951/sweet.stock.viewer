@@ -1,4 +1,4 @@
-﻿using sweet.stock.core.Attribute;
+﻿using sweet.stock.core.Attributes;
 
 namespace sweet.stock.core.Model
 {
