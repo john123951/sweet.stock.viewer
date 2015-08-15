@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using DevComponents.DotNetBar.Controls;
-using EmitMapper;
 using sweet.stock.core.Entity;
 using sweet.stock.core.Model;
 using sweet.stock.viewer.UserControls;

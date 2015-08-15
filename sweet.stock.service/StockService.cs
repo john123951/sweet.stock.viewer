@@ -128,6 +128,7 @@ namespace sweet.stock.service
                    WindowWidth = 605,
                    WindowHeight = 190,
                    WindowOpacity = 100,
+                   WindowTop = true
                };
 
                 _settingRepository.SaveConfigEntity(configInfo);
