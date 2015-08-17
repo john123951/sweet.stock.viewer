@@ -1,10 +1,10 @@
-﻿using sweet.stock.utility.Extentions;
+﻿using sweet.stock.core.Attributes;
+using sweet.stock.utility.Extentions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -19,6 +19,10 @@ namespace sweet.stock.viewer.Extentions
             if (propertyNames.IsNotEmpty())
             {
                 props = props.Where(x => propertyNames.Any(name => System.String.Compare(name, x.Name, System.StringComparison.OrdinalIgnoreCase) == 0));
+            }
+            else
+            {
+                props = props.Where(x => x.GetCustomAttributes(typeof(DescriptionAttribute), true).IsNotEmpty());
             }
 
             return props.ToArray();

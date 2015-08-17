@@ -1,6 +1,7 @@
 ﻿using sweet.stock.core.Contract;
 using sweet.stock.core.Model;
 using sweet.stock.utility;
+using sweet.stock.utility.Extentions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +23,11 @@ namespace sweet.stock.client
 
         public List<StockInfo> MarketPrice(string[] stockIds)
         {
+            if (!stockIds.IsNotEmpty())
+            {
+                return new List<StockInfo>();
+            }
+
             string url = @"http://hq.sinajs.cn/list=" + string.Join(",", stockIds);
 
             string response = HttpUtil.Get(url, null, Encoding.GetEncoding("GBK"));

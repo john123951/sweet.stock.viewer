@@ -35,9 +35,9 @@ namespace sweet.stock.core.Contract
         /// <summary>
         /// 移除一个股票
         /// </summary>
-        /// <param name="stockCode"></param>
+        /// <param name="stockId"></param>
         /// <returns></returns>
-        bool RemoveStockInfo(string stockCode);
+        bool RemoveStockInfo(string stockId);
 
         /// <summary>
         /// 获取配置信息

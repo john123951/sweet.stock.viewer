@@ -9,6 +9,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Timer = System.Timers.Timer;
@@ -58,7 +59,7 @@ namespace sweet.stock.viewer.Forms
                     var stockInfo = selectedItem.Tag as StockInfo;
                     if (stockInfo != null)
                     {
-                        _stockService.RemoveStockInfo(stockInfo.StockCode);
+                        _stockService.RemoveStockInfo(stockInfo.StockId);
                     }
                 }
                 InitStockData();
@@ -75,9 +76,12 @@ namespace sweet.stock.viewer.Forms
                 }
             };
 
+            int inputVersion = 1;
             //智能补全
             tb_stockId.KeyUp += (sender, e) =>
             {
+                int currentVersion = Interlocked.Increment(ref inputVersion);
+
                 var control = tb_stockId;
                 string input = control.Text.Trim();
 
@@ -85,7 +89,10 @@ namespace sweet.stock.viewer.Forms
                 {
                     var dataList = _stockService.Suggest(input);
 
-                    control.Invoke(new Action(() => { control.DataSource = dataList; }));
+                    if (currentVersion == inputVersion)
+                    {
+                        control.Invoke(new Action(() => { control.DataSource = dataList; }));
+                    }
                 });
             };
 
@@ -123,14 +130,27 @@ namespace sweet.stock.viewer.Forms
                 };
 
             //插入新股票
-            Action<object, EventArgs> a = (sender, e) =>
+
+            Action<object, EventArgs> action = (sender, e) =>
             {
-                _stockService.InsertStockInfo(new StockEntity() { StockCode = tb_stockId.Text.Trim() });
-                InitStockData();
+                var selectedItems = tb_stockId.AutoCompeleControl.SelectedItems;
+
+                if (selectedItems.Count <= 0 && tb_stockId.AutoCompeleControl.Items.Count > 0)
+                {
+                    tb_stockId.AutoCompeleControl.Items[0].Selected = true;
+                }
+
+                if (selectedItems != null && selectedItems.Count == 1)
+                {
+                    var suggestInfo = (SuggestInfo)selectedItems[0].Tag;
+
+                    _stockService.InsertStockInfo(new StockEntity() { StockId = suggestInfo.StockId });
+                    InitStockData();
+                }
             };
 
-            btn_insertStock.Click += new EventHandler(a);
-            tb_stockId.AutoCompeleControl.DoubleClick += new EventHandler(a);
+            btn_insertStock.Click += new EventHandler(action);
+            tb_stockId.AutoCompeleControl.DoubleClick += new EventHandler(action);
 
             //退出时保存设置
             this.Closed += (sender, e) => _stockService.SaveConfigEntity(_configInfo);

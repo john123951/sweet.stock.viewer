@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\ShowDescriptionAttribute.cs" />
+    <Compile Include="Contract\ICacheProvider.cs" />
     <Compile Include="Contract\IStockRepository.cs" />
     <Compile Include="Contract\IStockReader.cs" />
     <Compile Include="Contract\IStockService.cs" />

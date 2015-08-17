@@ -2,7 +2,6 @@
 using sweet.stock.core.Contract;
 using sweet.stock.core.Entity;
 using sweet.stock.core.Model;
-using sweet.stock.utility.Extentions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,8 +13,6 @@ namespace sweet.stock.service
         private readonly IStockRepository _stockRepository;
         private readonly ISettingRepository _settingRepository;
 
-        private string[] _stockIds;
-
         public StockService(IStockReader stockReader, IStockRepository stockRepository, ISettingRepository settingRepository)
         {
             _stockReader = stockReader;
@@ -25,35 +22,32 @@ namespace sweet.stock.service
 
         public List<StockInfo> InitAllStockInfos()
         {
-            var entities = _stockRepository.GetStoreEntities();
+            //var entities = _stockRepository.GetStoreEntities();
 
-            //根据保存的code，搜索股票
-            var stockId = entities.AsParallel()
-                                  .Select(stockEntity =>
-                                  {
-                                      var suggestInfo = _stockReader.Suggest(stockEntity.StockCode).FirstOrDefault();
+            ////根据保存的code，搜索股票
+            //var stockId = entities.AsParallel()
+            //                      .Select(stockEntity =>
+            //                      {
+            //                          var suggestInfo = _stockReader.Suggest(stockEntity.StockCode).FirstOrDefault();
 
-                                      return suggestInfo != null ? suggestInfo.StockId : string.Empty;
-                                  })
-                                  .Where(x => !string.IsNullOrEmpty(x))
-                                  .ToArray();
+            //                          return suggestInfo != null ? suggestInfo.StockId : string.Empty;
+            //                      })
+            //                      .Where(x => !string.IsNullOrEmpty(x))
+            //                      .ToArray();
 
-            if (stockId.IsNotEmpty())
-            {
-                _stockIds = stockId;
-            }
+            //if (stockId.IsNotEmpty())
+            //{
+            //    _stockIds = stockId;
+            //}
 
             return UpdateAllStockInfos();
         }
 
         public List<StockInfo> UpdateAllStockInfos()
         {
-            if (_stockIds == null || _stockIds.Length <= 0)
-            {
-                return new List<StockInfo>();
-            }
+            var stockIds = _stockRepository.GetStoreEntities().Select(x => x.StockId).ToArray();
 
-            var result = _stockReader.MarketPrice(_stockIds);
+            var result = _stockReader.MarketPrice(stockIds);
 
             return result;
         }
@@ -74,7 +68,7 @@ namespace sweet.stock.service
 
             var entites = _stockRepository.GetStoreEntities();
 
-            if (entites.Exists(x => System.String.Compare(x.StockCode.Trim(), entity.StockCode.Trim(), System.StringComparison.OrdinalIgnoreCase) == 0))
+            if (entites.Exists(x => System.String.Compare(x.StockId.Trim(), entity.StockId.Trim(), System.StringComparison.OrdinalIgnoreCase) == 0))
             {
                 return false;
             }
@@ -84,11 +78,11 @@ namespace sweet.stock.service
             return _stockRepository.SaveEntities(entites);
         }
 
-        public bool RemoveStockInfo(string stockCode)
+        public bool RemoveStockInfo(string stockId)
         {
             var entites = _stockRepository.GetStoreEntities();
 
-            var entity = entites.FirstOrDefault(x => System.String.Compare(x.StockCode, stockCode, System.StringComparison.OrdinalIgnoreCase) == 0);
+            var entity = entites.FirstOrDefault(x => System.String.Compare(x.StockId, stockId, System.StringComparison.OrdinalIgnoreCase) == 0);
 
             if (entity != null)
             {

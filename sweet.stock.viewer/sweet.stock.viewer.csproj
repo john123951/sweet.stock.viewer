@@ -104,6 +104,10 @@
       <Project>{E3605C9E-42A8-4EA3-B66B-C0B7AF2DD6AA}</Project>
       <Name>sweet.stock.client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\sweet.stock.component\sweet.stock.component.csproj">
+      <Project>{184F9FB3-DD04-4AE4-A5F7-7C1DADDBBF15}</Project>
+      <Name>sweet.stock.component</Name>
+    </ProjectReference>
     <ProjectReference Include="..\sweet.stock.core\sweet.stock.core.csproj">
       <Project>{9DC00E86-776C-4FD6-897E-D62AEEE46907}</Project>
       <Name>sweet.stock.core</Name>

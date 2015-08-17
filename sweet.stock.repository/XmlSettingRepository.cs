@@ -7,7 +7,7 @@ namespace sweet.stock.repository
 {
     public class XmlSettingRepository : ISettingRepository
     {
-        private const string FilePath = "db/configEntity.db";
+        private const string FilePath = "App_Data/configEntity.db";
 
         private static ConfigInfo _cache = null;
 

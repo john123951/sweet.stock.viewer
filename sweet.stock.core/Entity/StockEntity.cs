@@ -2,8 +2,10 @@
 {
     public class StockEntity
     {
-        public string StockCode { get; set; }
+        public string StockId { get; set; }
 
-        public string StockName { get; set; }
+        //public string StockCode { get; set; }
+
+        //public string StockName { get; set; }
     }
 }
