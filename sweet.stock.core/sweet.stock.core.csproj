@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -38,12 +38,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ShowDescriptionAttribute.cs" />
+    <Compile Include="Contract\ICacheProvider.cs" />
     <Compile Include="Contract\IStockRepository.cs" />
     <Compile Include="Contract\IStockReader.cs" />
+    <Compile Include="Contract\IStockService.cs" />
+    <Compile Include="Entity\ShowDescriptionEntity.cs" />
     <Compile Include="Entity\StockEntity.cs" />
+    <Compile Include="Model\ConfigInfo.cs" />
     <Compile Include="Model\StockInfo.cs" />
     <Compile Include="Model\SuggestInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Contract\ISettingRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

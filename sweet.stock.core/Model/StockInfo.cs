@@ -1,7 +1,27 @@
-﻿using System.ComponentModel;
+﻿using sweet.stock.core.Attributes;
+using System;
 
 namespace sweet.stock.core.Model
 {
+    public class MyFormatProvider : IFormatProvider, ICustomFormatter
+    {
+        public object GetFormat(Type formatType)
+        {
+            if (formatType == typeof(ICustomFormatter))
+                return this;
+            else
+                return null;
+        }
+
+        public string Format(string format, object arg, IFormatProvider formatProvider)
+        {
+            // Convert argument to a string
+            string result = arg.ToString() + "test";
+
+            return result;
+        }
+    }
+
     /// <summary>
     /// 股票信息
     /// </summary>
@@ -9,25 +29,44 @@ namespace sweet.stock.core.Model
     {
         public string StockId { get; set; }
 
-        [Description("股票代码")]
+        [ShowDescription("股票代码", IsShow = true)]
         public string StockCode { get; set; }
 
-        [Description("股票名字")]
+        [ShowDescription("股票名字", IsShow = true)]
         public string StockName { get; set; }
 
-        [Description("今日开盘价")]
+        [ShowDescription("今日开盘价", IsShow = true)]
         public decimal OpeningPrice { get; set; }
 
-        [Description("昨日收盘价")]
+        [ShowDescription("昨日收盘价", IsShow = true)]
         public decimal ClosingPrice { get; set; }
 
-        [Description("当前价格")]
+        [ShowDescription("当前价格", IsShow = true)]
         public decimal PresentPrice { get; set; }
 
-        [Description("今日最高价")]
+        [ShowDescription("今日最高价")]
         public decimal HighestPrice { get; set; }
 
-        [Description("今日最低价")]
+        [ShowDescription("今日最低价")]
         public decimal LowestPrice { get; set; }
+
+        public double TradingQuantity { get; set; }
+
+        [ShowDescription("成交量(万手)", IsShow = true)]
+        public string TradingQuantityShow
+        {
+            get { return (TradingQuantity / 100 / 10000).ToString("F2"); }
+        }
+
+        public decimal TradingAmount { get; set; }
+
+        [ShowDescription("成交额(万元)", IsShow = true)]
+        public string TradingAmountShow
+        {
+            get { return (TradingAmount / 10000).ToString("F2"); }
+        }
+
+        [ShowDescription("今日涨幅", IsShow = true)]
+        public string Increase { get { return ((PresentPrice / Math.Max(0.01m, ClosingPrice) - 1) * 1).ToString("+0.00%;-0.00%;0%"); } }
     }
 }

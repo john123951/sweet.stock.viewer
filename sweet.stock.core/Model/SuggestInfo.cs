@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿using sweet.stock.core.Attributes;
 
 namespace sweet.stock.core.Model
 {
@@ -9,10 +9,10 @@ namespace sweet.stock.core.Model
     {
         public string StockId { get; set; }
 
-        [Description("股票代码")]
+        [ShowDescription("股票代码", IsShow = true)]
         public string StockCode { get; set; }
 
-        [Description("股票名字")]
+        [ShowDescription("股票名字", IsShow = true)]
         public string StockName { get; set; }
     }
 }

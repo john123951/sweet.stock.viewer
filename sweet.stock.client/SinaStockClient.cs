@@ -1,6 +1,7 @@
 ﻿using sweet.stock.core.Contract;
 using sweet.stock.core.Model;
 using sweet.stock.utility;
+using sweet.stock.utility.Extentions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +14,7 @@ namespace sweet.stock.client
     {
         public List<SuggestInfo> Suggest(string input)
         {
-            string url = @"http://suggest3.sinajs.cn/suggest/key=" + input;
+            string url = @"http://suggest3.sinajs.cn/suggest/type=11,12,13,14,15&key=" + input;
 
             string response = HttpUtil.Get(url, null, Encoding.GetEncoding("GBK"));
 
@@ -22,6 +23,11 @@ namespace sweet.stock.client
 
         public List<StockInfo> MarketPrice(string[] stockIds)
         {
+            if (!stockIds.IsNotEmpty())
+            {
+                return new List<StockInfo>();
+            }
+
             string url = @"http://hq.sinajs.cn/list=" + string.Join(",", stockIds);
 
             string response = HttpUtil.Get(url, null, Encoding.GetEncoding("GBK"));
@@ -62,34 +68,41 @@ namespace sweet.stock.client
             var result = new List<StockInfo>();
             using (var reader = new StringReader(input))
             {
-                var line = reader.ReadLine();
-                string stockId = string.Empty;
-
-                var matchStockId = Regex.Match(line, @"hq_str_(\w+)");
-                if (matchStockId.Success)
+                while (true)
                 {
-                    stockId = matchStockId.Groups[1].Value;
-                }
+                    var line = reader.ReadLine();
+                    string stockId = string.Empty;
 
-                var matchStockContent = Regex.Match(line, "\"(.+)\";");
-                if (matchStockContent.Success)
-                {
-                    var strItem = matchStockContent.Value.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                    if (string.IsNullOrEmpty(line)) { break; }
 
-                    var model = new StockInfo
+                    var matchStockId = Regex.Match(line, @"hq_str_(\w+)");
+                    if (matchStockId.Success)
                     {
-                        StockId = stockId,
-                        StockName = strItem[0],
-                        OpeningPrice = decimal.Parse(strItem[1]),
-                        ClosingPrice = decimal.Parse(strItem[2]),
-                        PresentPrice = decimal.Parse(strItem[3]),
-                        HighestPrice = decimal.Parse(strItem[4]),
-                        LowestPrice = decimal.Parse(strItem[5])
-                    };
+                        stockId = matchStockId.Groups[1].Value;
+                    }
 
-                    result.Add(model);
+                    var matchStockContent = Regex.Match(line, "\"(.+)\";");
+                    if (matchStockContent.Success)
+                    {
+                        var strItem = matchStockContent.Groups[1].Value.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+                        var model = new StockInfo
+                        {
+                            StockId = stockId,
+                            StockCode = Regex.Match(stockId, @"(\d+)").Groups[1].Value,
+                            StockName = strItem[0],
+                            OpeningPrice = decimal.Parse(strItem[1]),
+                            ClosingPrice = decimal.Parse(strItem[2]),
+                            PresentPrice = decimal.Parse(strItem[3]),
+                            HighestPrice = decimal.Parse(strItem[4]),
+                            LowestPrice = decimal.Parse(strItem[5]),
+                            TradingQuantity = double.Parse(strItem[8]),
+                            TradingAmount = decimal.Parse(strItem[9]),
+                        };
+
+                        result.Add(model);
+                    }
                 }
-
             }
 
             return result;

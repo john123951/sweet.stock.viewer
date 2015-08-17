@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E3605C9E-42A8-4EA3-B66B-C0B7AF2DD6AA}</ProjectGuid>
+    <ProjectGuid>{184F9FB3-DD04-4AE4-A5F7-7C1DADDBBF15}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>sweet.stock.client</RootNamespace>
-    <AssemblyName>sweet.stock.client</AssemblyName>
+    <RootNamespace>sweet.stock.component</RootNamespace>
+    <AssemblyName>sweet.stock.component</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLite, Version=0.9.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLite.0.9.6\lib\net35\NLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -38,19 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SinaStockClient.cs" />
+    <Compile Include="NLiteCacheProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\sweet.stock.core\sweet.stock.core.csproj">
       <Project>{9DC00E86-776C-4FD6-897E-D62AEEE46907}</Project>
       <Name>sweet.stock.core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\sweet.stock.utility\sweet.stock.utility.csproj">
-      <Project>{32D627C8-8BA7-4A5D-B7C9-D34BE69FB94F}</Project>
-      <Name>sweet.stock.utility</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

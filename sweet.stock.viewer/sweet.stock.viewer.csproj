@@ -24,23 +24,24 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevComponents.DotNetBar.SuperGrid, Version=12.1.0.0, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL" />
     <Reference Include="DevComponents.DotNetBar2, Version=12.1.0.0, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL" />
     <Reference Include="DevComponents.Instrumentation, Version=12.1.0.0, Culture=neutral, PublicKeyToken=bc4a9d761ea44ef0" />
-    <Reference Include="EmitMapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EmitMapper.1.0.0\lib\EmitMapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Threading, Version=1.0.2856.102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -67,6 +68,9 @@
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\AutoCompleteTextBoxX.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\ListBoxCheckBoxItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="Forms\MainForm.resx">
@@ -100,6 +104,10 @@
       <Project>{E3605C9E-42A8-4EA3-B66B-C0B7AF2DD6AA}</Project>
       <Name>sweet.stock.client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\sweet.stock.component\sweet.stock.component.csproj">
+      <Project>{184F9FB3-DD04-4AE4-A5F7-7C1DADDBBF15}</Project>
+      <Name>sweet.stock.component</Name>
+    </ProjectReference>
     <ProjectReference Include="..\sweet.stock.core\sweet.stock.core.csproj">
       <Project>{9DC00E86-776C-4FD6-897E-D62AEEE46907}</Project>
       <Name>sweet.stock.core</Name>
@@ -107,6 +115,10 @@
     <ProjectReference Include="..\sweet.stock.repository\sweet.stock.repository.csproj">
       <Project>{00244ade-977c-4dc9-881f-bf33f13511a5}</Project>
       <Name>sweet.stock.repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\sweet.stock.service\sweet.stock.service.csproj">
+      <Project>{6CB24FC9-F0A3-4E9E-B73A-EB42FF65E445}</Project>
+      <Name>sweet.stock.service</Name>
     </ProjectReference>
     <ProjectReference Include="..\sweet.stock.utility\sweet.stock.utility.csproj">
       <Project>{32d627c8-8ba7-4a5d-b7c9-d34be69fb94f}</Project>
